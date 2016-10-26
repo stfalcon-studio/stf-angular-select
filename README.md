@@ -32,7 +32,9 @@ stf-angular-select директива випадаючого списку
 ```
 
 ### instalation
-``` 
+``` javascript
+import {StfSelectDirective, StfSelectOptionDirective} from "stf-angular-select";
+
 angular.module("app", [])
     .constant('NP_STF_SELECT_THROTTLE_TIME', 100) // throtle  time of reaction after clicking
     .directive('npStfSelect', StfSelectDirective.Factory)
