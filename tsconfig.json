@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "sourceMap": true,
+    "module": "commonjs",
+    "experimentalDecorators": true,
+    "outDir": "out"
+  },
+  "exclude": [
+    "out",
+    "dist",
+    "apidoc",
+    "dist_dev",
+    "node_modules",
+    "dev",
+    "typings/main.d.ts",
+    "typings/main",
+    "reports"
+  ],
+  "version": "2.0"
+}

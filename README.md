@@ -31,7 +31,12 @@ stf-angular-select директива випадаючого списку
 
 ```
 
-### instalation
+### instalation and using
+```
+install stf-angular-select --save
+
+```
+ 
 ``` javascript
 import {StfSelectDirective, StfSelectOptionDirective} from "stf-angular-select";
 

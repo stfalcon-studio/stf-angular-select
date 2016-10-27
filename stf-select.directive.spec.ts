@@ -1,10 +1,13 @@
 /**
  * Created by andrey on 22.09.16.
  */
+require('phantomjs-polyfill');
+require('es6-promise').polyfill();
+import "angular";
+import "angular-mocks";
 import {StfSelectDirective} from "./stf-select.directive";
 import {StfSelectOptionDirective} from "./stf-select-option.directive";
 import "angular-translate";
-
 
 interface IItemStfSelect{
     name: string;
