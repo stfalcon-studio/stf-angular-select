@@ -8,7 +8,7 @@ let files = ['./node_modules/phantomjs-polyfill/bind-polyfill.js',];
 let env = process.argv.find(el => /^--NODE_ENV=/.test(el));
 
 
-files.push('./stf-select.directive.spec.ts');
+files.push('./src/stf-select.directive.spec.ts');
 
 module.exports = function (config) {
     config.set({

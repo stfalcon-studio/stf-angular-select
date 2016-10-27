@@ -122,7 +122,6 @@ describe('directive: stf-select', function () {
         console.log('click two');
         iconEl.trigger('click');
         scope.$digest();
-        console.log(element.html());
 
         expect(element[0].querySelector('.stf-select').classList.contains('stf-select_focused')).toBeFalsy();
     });
