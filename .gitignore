@@ -10,3 +10,5 @@ dist_dev
 dist
 tmp
 apidoc/apidoc
+bin
+npm-debug.log
