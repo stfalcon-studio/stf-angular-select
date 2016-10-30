@@ -188,4 +188,4 @@ export class StfSelectDirective {
     }
 }
 
-//StfSelectDirective.Factory.$inject = ['$translate', "$window", "NP_STF_SELECT_THROTTLE_TIME"];
+StfSelectDirective.Factory.$inject = ['$translate', "$window", "NP_STF_SELECT_THROTTLE_TIME"];
