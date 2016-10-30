@@ -33,7 +33,7 @@ stf-angular-select директива випадаючого списку
 
 ### instalation and using
 ```
-install stf-angular-select --save
+npm install stf-angular-select --save
 
 ```
  
