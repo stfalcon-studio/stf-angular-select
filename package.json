@@ -1,13 +1,14 @@
 {
   "name": "stf-angular-select",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Custom reusable select for angular with wide posibilities",
   "main": "bin/index.js",
+  "types": "bin/index.d.ts",
   "scripts": {
     "test": "karma start --NODE_ENV=test",
     "dev-test": "karma start --NODE_ENV=dev-test",
     "build": "webpack --config webpack/webpack.build.js --NODE_ENV=production",
-    "postinstall": "gulp compile"
+    "prepublish": "gulp compile"
   },
   "repository": {
     "type": "git",
@@ -62,6 +63,7 @@
     "karma-spec-reporter": "~0.0.23",
     "karma-typescript-preprocessor": "~0.0.21",
     "karma-webpack": "~1.7.0",
+    "merge2": "^1.0.2",
     "morgan": "~1.7.0",
     "node-sass": "~3.7.0",
     "phantomjs-polyfill": "~0.0.2",

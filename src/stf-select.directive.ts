@@ -6,9 +6,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/observable/fromEvent';
 
-const _: _.LoDashStatic = require("lodash");
 
-interface IScopeStfSelect extends angular.IScope {
+export interface IScopeStfSelect extends angular.IScope {
     label: string;
     ngModel: any;
     focused: boolean;
@@ -20,7 +19,23 @@ interface IScopeStfSelect extends angular.IScope {
 
 export class StfSelectDirective {
     _getScope: () => IScopeStfSelect = () => null;
-    template: string = require("./stf-select.html");
+    template: string = `
+<section class="stf-select" ng-class="{'stf-select_has-value': ngModel? true : false, 'stf-select_focused': focused, 'stf-select_disabled': disabled || ngDisabled}">
+    <div class="stf-select__label" ng-transclude="label"></div>
+    <section class="stf-select__container"> 
+        <section class="stf-select__inner-wrapper">
+            <div class="stf-select__value" ng-transclude="value"></div>
+            <div class="stf-select__placeholder" ng-transclude="label"></div>
+            <div class="stf-select__icon"></div>
+        </section>
+
+        <section class="stf-select__search-input" ng-transclude="searchInput"></section>
+        <section class="stf-select__options" ng-attr-id="stf-select-optins-{{::selectId}}" ng-transclude="options">
+        </section>
+        <!--<div class="stf-select__divider"></div>-->
+    </section>
+</section>
+    `;
     restrict: string = 'E';
     require = "ngModel";
     scope: any = {

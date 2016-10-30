@@ -3,7 +3,7 @@ import IScope = angular.IScope;
  * Created by andrey on 06.09.16.
  */
 
-interface IOptionScope extends IScope{
+export interface IOptionScope extends IScope{
     selectValue: Function;
     ngValue: any;
     value: any;
@@ -14,7 +14,9 @@ export class StfSelectOptionDirective
 {
     transclude: any =  true;
     restrict: any = 'E';
-    template: string = require("./stf-select-option.html");
+    template: string = `
+    <section class="stf-select-option" data-ng-click="selectValue()" ng-transclude></section>
+    `;
     scope: any = {
         ngValue: "<?",
         value: "@?"

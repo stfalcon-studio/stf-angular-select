@@ -1,8 +1,0 @@
-"--module"
-"commonjs"
-"--target"
-"ES6"
-"--outDir"
-"/home/andrey/sites/stf-select/gulp-tsc-tmp-116928-7449-1m0u8uz.bgt5tdquxr"
-"/home/andrey/sites/stf-select/src/index.ts"
-"/home/andrey/sites/stf-select/src/.gulp-tsc-tmp-116928-7449-6zsybs.dt3dte29.ts"
