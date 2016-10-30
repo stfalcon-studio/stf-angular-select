@@ -3,7 +3,7 @@
   "version": "0.8.2",
   "description": "Custom reusable select for angular with wide posibilities",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/index.d.ts", 
   "scripts": {
     "test": "karma start --NODE_ENV=test",
     "dev-test": "karma start --NODE_ENV=dev-test",
