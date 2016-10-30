@@ -38,6 +38,7 @@ install stf-angular-select --save
 ```
  
 ``` javascript
+import "stf-angular-select/src/stf-select.scss";
 import {StfSelectDirective, StfSelectOptionDirective} from "stf-angular-select";
 
 angular.module("app", [])
