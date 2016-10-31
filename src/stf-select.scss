@@ -5,6 +5,7 @@ $red-color: #ec413b;
 $white-color: #ffffff;
 $banner-background: #fcffce;
 $important-message-background: #ffe6e5;
+
 .stf-select {
   position: relative;
   margin: 18px 0;
@@ -18,23 +19,18 @@ $important-message-background: #ffe6e5;
     padding: 0px 2px 3px 0px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     box-sizing: border-box;
+    cursor: text;
   }
   &__label {
     display: none;
-    //position: absolute;
-    //top: -16px;
-    //font-size: 12px;
-    //line-height: 16px;
-    //color: $grey-color;
-    //opacity: 0;
   }
   &__value {
     display: none;
     height: 33px;
     font-size: 16px;
-    line-height: 24px;
-    padding: 0px 35px 3px 0px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    line-height: 26px;
+    padding: 2px 35px 4px 0px;
+    border-bottom: 1px solid transparent;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -57,19 +53,25 @@ $important-message-background: #ffe6e5;
   &__icon {
     display: block;
     position: absolute;
-    top: 0;
-    right: 2px;
+    top: 5px;
+    right: -5px;
+    height: 28px;
     width: 24px;
-    height: 100%;
     text-align: center;
     margin: 0 4px;
     cursor: pointer;
     z-index: 6;
     &:after {
-      content: '\25BC';
+      content: '';
       display: inline-block;
-      transform: scaleY(0.6) scaleX(1);
-      opacity: 0.38;
+      position: absolute;
+      top: 10px;
+      right: 5px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 5px 5px 0 5px;
+      border-color: $grey-color transparent transparent transparent;
     }
   }
   &__options {
@@ -104,7 +106,7 @@ $important-message-background: #ffe6e5;
       padding-top: 8px;
     }
     &:last-child {
-      padding-bottom: 8px; 
+      padding-bottom: 8px;
     }
   }
   md-divider{
@@ -112,7 +114,7 @@ $important-message-background: #ffe6e5;
       padding-top: 8px;
     }
     &:last-child {
-      padding-bottom: 8px; 
+      padding-bottom: 8px;
     }
   }
   stf-select-option {
@@ -121,11 +123,10 @@ $important-message-background: #ffe6e5;
       padding-top: 8px;
     }
     &:last-child {
-      padding-bottom: 8px; 
+      padding-bottom: 8px;
     }
   }
 }
-
 .stf-select-option {
   height: 48px;
   position: relative;
@@ -140,18 +141,16 @@ $important-message-background: #ffe6e5;
     background: rgb(238, 238, 238)
   }
   &_error{
-      color: #ec413b;
+    color: #ec413b;
   }
 }
-
 .stf-select__search-input {
   display: none;
   position: absolute;
   top: 0;
   z-index: 5;
-  background: white;
+  background: transparent;
 }
-
 .stf-select_has-value {
   .stf-select {
     &__value {
@@ -159,7 +158,7 @@ $important-message-background: #ffe6e5;
     }
     &__placeholder {
       width: auto;
-      transform: translateY(-19px) translateX(-2px) scale(0.75);
+      transform: translateY(-22px) translateX(0px) scale(0.75);
       color: rgba(0, 0, 0, 0.54);
     }
     &__icon {
@@ -167,15 +166,25 @@ $important-message-background: #ffe6e5;
         opacity: 1;
       }
     }
+    &__search-input {
+      background: $white-color;
+    }
   }
 }
-
 .stf-select_focused {
   .stf-select {
     &__placeholder {
       width: auto;
-      transform: translateY(-19px) translateX(-2px) scale(0.75);
-      color: rgba(0, 0, 0, 0.54);
+      transform: translateY(-22px) translateX(0px) scale(0.75);
+      color: $black-color;
+    }
+    &__icon {
+      &:after {
+        border-color: $black-color transparent transparent transparent;
+      }
+    }
+    &__container {
+      border-bottom: 2px solid $black-color;
     }
     &__options {
       display: block;
@@ -218,7 +227,6 @@ $important-message-background: #ffe6e5;
     }
   }
 }
-
 np-stf-select[required] {
   .stf-select {
     &__placeholder {
@@ -229,7 +237,6 @@ np-stf-select[required] {
     }
   }
 }
-
 .ng-submitted {
   np-stf-select {
     &.ng-invalid {
