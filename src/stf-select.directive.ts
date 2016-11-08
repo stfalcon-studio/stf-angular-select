@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs/Observable';
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/observable/fromEvent';
