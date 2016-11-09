@@ -86,10 +86,6 @@ $important-message-background: #ffe6e5;
     box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
   }
 
-  &__fixed-option {
-    padding-bottom: 8px;
-  }
-
   &__divider {
     display: block;
     border-top: 1px solid rgba(0, 0, 0, .12);
@@ -150,6 +146,7 @@ stf-fixed-option {
   border-top: 1px solid rgba(0,0,0,0.12);
   box-sizing: border-box;
   outline: none;
+  margin-bottom: 8px;
 
   &:hover {
     background: #eeeeee;
