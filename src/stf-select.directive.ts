@@ -28,9 +28,10 @@ export class StfSelectDirective {
         </section>
 
         <section class="stf-select__search-input" ng-transclude="searchInput"></section>
-        <section class="stf-select__options" ng-attr-id="stf-select-optins-{{::selectId}}" ng-transclude="options">
+        <section class="stf-select__options">
+        <div ng-attr-id="stf-select-optins-{{::selectId}}" ng-transclude="options"></div>
+        <div class="stf-select__fixed-option" ng-transclude="fixedOption"></div>
         </section>
-        <!--<div class="stf-select__divider"></div>-->
     </section>
 </section>
     `;
@@ -46,6 +47,7 @@ export class StfSelectDirective {
         value: 'stfSelectValue',
         options: 'stfSelectOptions',
         searchInput: '?stfSearchInput',
+        fixedOption: 'stfFixedOption'
     };
 
 

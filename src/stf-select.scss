@@ -78,24 +78,30 @@ $important-message-background: #ffe6e5;
     width: 100%;
     min-width: 136px;
     min-height: 0;
-    max-height: 256px;
-    overflow-y: auto;
     display: none;
     position: absolute;
     top: 50px;
-    /*padding-top: 8px;
-    padding-bottom: 8px;*/
     z-index: 7;
+    padding-bottom: 8px;
     background-color: #fafafa;
     box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
-    &::-webkit-scrollbar {
-      width: 8px;
-    }
-    &::-webkit-scrollbar-track {
-      background-color: #dddddd;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: #bdbdbd;
+  }
+
+  &__fixed-option {
+    min-height: 48px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: auto;
+    transition: background 0.15s linear;
+    padding: 8px 16px;
+    outline: none;
+    cursor: pointer;
+    border-top: 1px solid rgba(0,0,0,0.12);
+    box-sizing: border-box;
+
+    &:hover {
+      background: #eeeeee;
     }
   }
   &__divider {
@@ -125,6 +131,22 @@ $important-message-background: #ffe6e5;
     &:last-child {
       padding-bottom: 8px;
     }
+  }
+}
+
+stf-select-options {
+  display: block;
+  max-height: 200px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #dddddd;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #bdbdbd;
   }
 }
 .stf-select-option {
