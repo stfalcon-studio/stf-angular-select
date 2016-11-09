@@ -117,7 +117,7 @@ $important-message-background: #ffe6e5;
 stf-select-options {
   display: block;
   max-height: 200px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   &::-webkit-scrollbar {
     width: 8px;
