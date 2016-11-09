@@ -1,0 +1,14 @@
+<np-stf-select name="senderAddress" ng-model="$ctrl.invoice.senderAddress" required ng-change="$ctrl.updateCalculation();">
+    <stf-select-label>Адреса</stf-select-label>
+    <stf-select-value>{{$ctrl.invoice.senderAddress.description}}</stf-select-value>
+    <stf-select-options>
+        <stf-select-option data-ng-repeat="address in $ctrl.addresses track by address.id" ng-value="address">{{address.description}}</stf-select-option>
+        <md-divider role="separator"></md-divider>
+        <stf-select-option ng-value="null" data-ng-click="$ctrl.addNewAddressSender($ctrl.invoice.sender.id)">
+            Додати нову адресу
+        </stf-select-option>
+    </stf-select-options>
+    <stf-search-input>
+        <input>
+    </stf-search-input>
+</np-stf-select>

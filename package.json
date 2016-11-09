@@ -1,14 +1,15 @@
 {
   "name": "stf-angular-select",
-  "version": "0.8.10",
+  "version": "0.8.11",
   "description": "Custom reusable select for angular with wide posibilities",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts", 
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "karma start --NODE_ENV=test",
     "dev-test": "karma start --NODE_ENV=dev-test",
     "build": "webpack --config webpack/webpack.build.js --NODE_ENV=production",
-    "prepublish": "gulp compile"
+    "prepublish": "gulp compile",
+    "start": "webpack --config webpack/webpack.dev.js --watch --NODE_ENV=dev --inline --devtool cheap-module-inline-source-map"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
   },
   "homepage": "https://github.com/stfalcon-studio/stf-angular-select#readme",
   "dependencies": {
+    "@types/node": "^6.0.46",
     "angular": "^1.5.8",
     "angular-translate": "^2.12.1",
     "jquery": "^3.1.1",
