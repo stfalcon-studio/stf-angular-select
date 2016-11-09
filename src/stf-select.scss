@@ -82,9 +82,12 @@ $important-message-background: #ffe6e5;
     position: absolute;
     top: 50px;
     z-index: 7;
-    padding-bottom: 8px;
     background-color: #fafafa;
     box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
+  }
+
+  &__fixed-option {
+    padding-bottom: 8px;
   }
 
   &__divider {
@@ -110,6 +113,10 @@ $important-message-background: #ffe6e5;
     display: block;
     &:first-child {
       padding-top: 8px;
+    }
+
+    &:last-child {
+      padding-bottom: 8px;
     }
   }
 }
