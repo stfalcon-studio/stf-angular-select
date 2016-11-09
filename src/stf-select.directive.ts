@@ -47,7 +47,7 @@ export class StfSelectDirective {
         value: 'stfSelectValue',
         options: 'stfSelectOptions',
         searchInput: '?stfSearchInput',
-        fixedOption: 'stfFixedOption'
+        fixedOption: '?stfFixedOption'
     };
 
 
