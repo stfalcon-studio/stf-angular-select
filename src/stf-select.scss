@@ -87,23 +87,6 @@ $important-message-background: #ffe6e5;
     box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
   }
 
-  &__fixed-option {
-    min-height: 48px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: auto;
-    transition: background 0.15s linear;
-    padding: 8px 16px;
-    outline: none;
-    cursor: pointer;
-    border-top: 1px solid rgba(0,0,0,0.12);
-    box-sizing: border-box;
-
-    &:hover {
-      background: #eeeeee;
-    }
-  }
   &__divider {
     display: block;
     border-top: 1px solid rgba(0, 0, 0, .12);
@@ -147,6 +130,24 @@ stf-select-options {
   }
   &::-webkit-scrollbar-thumb {
     background-color: #bdbdbd;
+  }
+}
+
+stf-fixed-option {
+  min-height: 48px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: auto;
+  transition: background 0.15s linear;
+  padding: 8px 16px;
+  outline: none;
+  cursor: pointer;
+  border-top: 1px solid rgba(0,0,0,0.12);
+  box-sizing: border-box;
+
+  &:hover {
+    background: #eeeeee;
   }
 }
 .stf-select-option {
