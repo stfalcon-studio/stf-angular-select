@@ -4,6 +4,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/observable/fromEvent';
 
+const _:_.LoDashStatic = require("lodash");
+
 
 export interface IScopeStfSelect extends angular.IScope {
     label: string;
@@ -29,12 +31,12 @@ export class StfSelectDirective {
 
         <section class="stf-select__search-input" ng-transclude="searchInput"></section>
         <section class="stf-select__options">
-        <div ng-attr-id="stf-select-optins-{{::selectId}}" ng-transclude="options"></div>
-        <div class="stf-select__fixed-option" ng-transclude="fixedOption"></div>
+        <div class="stf-select__fixed-option"></div>
         </section>
     </section>
 </section>
     `;
+    //ng-transclude="options"
     restrict: string = 'E';
     require = "ngModel";
     scope: any = {
@@ -45,9 +47,9 @@ export class StfSelectDirective {
     transclude: any = {
         label: 'stfSelectLabel',
         value: 'stfSelectValue',
-        options: 'stfSelectOptions',
+        //options: 'stfSelectOptions',
         searchInput: '?stfSearchInput',
-        fixedOption: '?stfFixedOption'
+        //fixedOption: '?stfFixedOption'
     };
 
 
@@ -56,7 +58,7 @@ export class StfSelectDirective {
     }
 
 
-    link(scope: IScopeStfSelect, element, attributes: any, ngModelController: angular.INgModelController) {
+    link(scope: IScopeStfSelect, element, attributes: any, ngModelController: angular.INgModelController, transcludeFn: angular.ITranscludeFunction) {
         if (scope.fixNgModal)
             mdFixes();
 
@@ -158,6 +160,25 @@ export class StfSelectDirective {
             iconElSubscription.unsubscribe();
         });
 
+        const transcludeEls = transcludeFn();
+        
+        let options;
+        let fixed;
+        console.log(transcludeEls);
+        _.each(transcludeEls, el=>{
+            if(el.tagName === "STF-SELECT-OPTIONS"){
+                options = el;
+            }
+            
+            if(el.tagName === "STF-FIXED-OPTION"){
+                fixed = el;
+            }
+        });
+
+        $('body').append(`<div class="stf-select__options" id="stf-select-optins-${scope.selectId}"></div>`);
+        let jOptins = $(`#stf-select-optins-${scope.selectId}`);
+        jOptins.append(options); 
+
         function mdFixes() {
             const $modalContent = element.closest('.modal-content');
             const $modalContentZIndex = $modalContent.css("z-index") || 0;
@@ -178,10 +199,10 @@ export class StfSelectDirective {
             scope.$on('$destroy', () => {
                 $modalContent.css('z-index', $modalContentZIndex);
             });
+
+            
         }
-
     }
-
 
     public static Factory($translate: angular.translate.ITranslateService, $window: angular.IWindowService, NP_STF_SELECT_THROTTLE_TIME: number) {
         return new StfSelectDirective($translate, $window, NP_STF_SELECT_THROTTLE_TIME);
