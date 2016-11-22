@@ -2,9 +2,10 @@ import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/throttleTime';
+import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/fromEvent';
 
-const _:_.LoDashStatic = require("lodash");
+const _: _.LoDashStatic = require("lodash");
 
 
 export interface IScopeStfSelect extends angular.IScope {
@@ -40,7 +41,7 @@ export class StfSelectDirective {
     restrict: string = 'E';
     require = "ngModel";
     scope: any = {
-        fixNgModal: "<",
+        fixNgModal: "<",    
         ngDisabled: "<",
         disabled: "<",
     };
@@ -53,7 +54,7 @@ export class StfSelectDirective {
     };
 
 
-    constructor(protected $translate: angular.translate.ITranslateService, protected $window: angular.IWindowService, protected _NP_STF_SELECT_THROTTLE_TIME: number) {
+    constructor(protected $translate: angular.translate.ITranslateService, protected $window: angular.IWindowService, protected $compile: angular.ICompileService, protected _NP_STF_SELECT_THROTTLE_TIME: number) {
 
     }
 
@@ -62,8 +63,10 @@ export class StfSelectDirective {
         if (scope.fixNgModal)
             mdFixes();
 
+        let self = this;
+
         let valueClicked = false;
-        
+
         ngModelController.$render = () => scope.ngModel = ngModelController.$viewValue;
 
         scope.selectId = Math.round(Math.random() * 100000000000);
@@ -108,7 +111,12 @@ export class StfSelectDirective {
             }
         });
 
-        
+        const windowResizeObservable: Observable<any> = Observable.fromEvent(this.$window, 'resize').throttleTime(100);
+        const windowResizeSubscription = windowResizeObservable.subscribe(
+            event => calculatePositionAnsSize()
+        );
+
+
 
         const jqFilterInput = element.find('.stf-select__search-input input');
 
@@ -128,7 +136,7 @@ export class StfSelectDirective {
             (event, value: any) => {
                 let old = ngModelController.$viewValue;
                 scope.focused = false;
-                if(old !== value){
+                if (old !== value) {
                     ngModelController.$setViewValue(value);
                     scope.ngModel = value;
                 }
@@ -140,7 +148,11 @@ export class StfSelectDirective {
 
             if (scope.focused) {
                 if (jqFilterInput.length) {
-                    setTimeout(() => jqFilterInput.focus(), 200);
+                    setTimeout(() => jqFilterInput.focus(), 200); 
+                }
+
+                if(newValue !== oldValue){
+                    calculatePositionAnsSize();
                 }
             }
 
@@ -156,25 +168,43 @@ export class StfSelectDirective {
         });
 
         const transcludeEls = transcludeFn();
-        
+
         let options;
         let fixedOpt;
-        console.log(transcludeEls);
-        _.each(transcludeEls, el=>{
-            if(el.tagName === "STF-SELECT-OPTIONS"){
+        _.each(transcludeEls, el => {
+            if (el.tagName === "STF-SELECT-OPTIONS") {
                 options = el;
             }
-            
-            if(el.tagName === "STF-FIXED-OPTION"){
+
+            if (el.tagName === "STF-FIXED-OPTION") {
                 fixedOpt = el;
             }
         });
 
-        $('body').append(`<div class="stf-select__options" id="stf-select-optins-${scope.selectId}"></div>`);
+        $('body').append(this.$compile(`<div 
+        ng-class="{'stf-select_has-value': ngModel? true : false, 'stf-select_focused': focused, 'stf-select_disabled': disabled || ngDisabled}">
+                <div class="stf-select__options"  id="stf-select-optins-${scope.selectId}"></div>
+            </div>`)(scope));
         let jOptins = $(`#stf-select-optins-${scope.selectId}`);
         jOptins.append(options);
         jOptins.append('<div class="stf-select__fixed-option"></div>');
         jOptins.children('.stf-select__fixed-option').append(fixedOpt);
+
+        calculatePositionAnsSize();
+        setTimeout(()=>calculatePositionAnsSize(), 200);
+        setTimeout(()=>calculatePositionAnsSize(), 500);
+        setTimeout(()=>calculatePositionAnsSize(), 1000);
+        
+
+        function calculatePositionAnsSize()
+        {
+            jOptins.width(element.width());
+            if((element.offset().top + 420 + element.height()) > self.$window.outerHeight){
+                jOptins.css('top', element.offset().top - element.height() - 180);
+            } else {
+                jOptins.css('top', element.offset().top + element.height() - 17);
+            }
+        }
 
 
         function mdFixes() {
@@ -198,13 +228,13 @@ export class StfSelectDirective {
                 $modalContent.css('z-index', $modalContentZIndex);
             });
 
-            
+
         }
     }
 
-    public static Factory($translate: angular.translate.ITranslateService, $window: angular.IWindowService, NP_STF_SELECT_THROTTLE_TIME: number) {
-        return new StfSelectDirective($translate, $window, NP_STF_SELECT_THROTTLE_TIME);
+    public static Factory($translate: angular.translate.ITranslateService, $window: angular.IWindowService, $compile: angular.ICompileService, NP_STF_SELECT_THROTTLE_TIME: number) {
+        return new StfSelectDirective($translate, $window, $compile, NP_STF_SELECT_THROTTLE_TIME);
     }
 }
 
-StfSelectDirective.Factory.$inject = ['$translate', "$window", "NP_STF_SELECT_THROTTLE_TIME"];
+StfSelectDirective.Factory.$inject = ['$translate', "$window", "$compile", "NP_STF_SELECT_THROTTLE_TIME"];
