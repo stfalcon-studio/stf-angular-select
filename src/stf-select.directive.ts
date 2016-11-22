@@ -64,7 +64,7 @@ export class StfSelectDirective {
             mdFixes();
 
         let self = this;
-
+        let elementChildren = element.children('.stf-select');
         let valueClicked = false;
 
         ngModelController.$render = () => scope.ngModel = ngModelController.$viewValue;
@@ -193,13 +193,13 @@ export class StfSelectDirective {
         calculatePositionAnsSize();
         setTimeout(()=>calculatePositionAnsSize(), 200);
         setTimeout(()=>calculatePositionAnsSize(), 500);
-        setTimeout(()=>calculatePositionAnsSize(), 1000);
-        
+        setTimeout(()=>calculatePositionAnsSize(), 1000); 
+         
 
         function calculatePositionAnsSize()
         {
             let elOffset = element.offset();
-            jOptins.width(element.width());
+            jOptins.width(elementChildren.width()); 
             if((elOffset.top + 420 + element.height()) > self.$window.outerHeight){
                 jOptins.css('top', elOffset.top - element.height() - 180);
             } else {
@@ -211,7 +211,7 @@ export class StfSelectDirective {
 
 
         function mdFixes() {
-            const $modalContent = element.closest('.modal-content');
+            /*const $modalContent = element.closest('.modal-content');
             const $modalContentZIndex = $modalContent.css("z-index") || 0;
 
             scope.$watch('focused', (newValue: boolean, oldValue) => {
@@ -229,7 +229,7 @@ export class StfSelectDirective {
 
             scope.$on('$destroy', () => {
                 $modalContent.css('z-index', $modalContentZIndex);
-            });
+            });*/
 
 
         }
