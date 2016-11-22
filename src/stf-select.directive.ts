@@ -162,6 +162,8 @@ export class StfSelectDirective {
         scope.$on('$destroy', () => {
             valueContainerSubscription.unsubscribe();
             windowClickSubscription.unsubscribe();
+            windowResizeSubscription.unsubscribe();
+            jOptinsParent.remove();
             elementMouseWheelSubscription.unsubscribe();
             elemetClickSubscription.unsubscribe();
             iconElSubscription.unsubscribe();
@@ -209,7 +211,7 @@ export class StfSelectDirective {
                 jOptins.css('top', elOffset.top + elementChildren.height() + 15);
             }
 
-            jOptinsParent.css('left', elOffset.left);
+            jOptins.css('left', elOffset.left);
         } 
 
 
