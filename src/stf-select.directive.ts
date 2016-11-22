@@ -198,12 +198,15 @@ export class StfSelectDirective {
 
         function calculatePositionAnsSize()
         {
+            let elOffset = element.offset();
             jOptins.width(element.width());
-            if((element.offset().top + 420 + element.height()) > self.$window.outerHeight){
-                jOptins.css('top', element.offset().top - element.height() - 180);
+            if((elOffset.top + 420 + element.height()) > self.$window.outerHeight){
+                jOptins.css('top', elOffset.top - element.height() - 180);
             } else {
-                jOptins.css('top', element.offset().top + element.height() - 17);
+                jOptins.css('top', elOffset.top + element.height() - 17);
             }
+
+            jOptins.css('left', elOffset.left);
         }
 
 
