@@ -190,24 +190,27 @@ export class StfSelectDirective {
         jOptins.append('<div class="stf-select__fixed-option"></div>');
         jOptins.children('.stf-select__fixed-option').append(fixedOpt);
 
+
         calculatePositionAnsSize();
         setTimeout(()=>calculatePositionAnsSize(), 200);
         setTimeout(()=>calculatePositionAnsSize(), 500);
         setTimeout(()=>calculatePositionAnsSize(), 1000); 
          
-
-        function calculatePositionAnsSize()
+        let jOptinsParent = jOptins.parent();
+        function calculatePositionAnsSize() 
         {
+            let jOptinsParent = jOptins.parent();
             let elOffset = element.offset();
+            jOptinsParent.width(elementChildren.width()); 
             jOptins.width(elementChildren.width()); 
-            if((elOffset.top + 420 + elementChildren.height()) > self.$window.outerHeight){
-                jOptins.css('top', elOffset.top - elementChildren.height() - 180);
+            if((elOffset.top + 450 + elementChildren.height()) > self.$window.outerHeight){
+                jOptins.css('top', elOffset.top - elementChildren.height() - 220);
             } else {
-                jOptins.css('top', elOffset.top + elementChildren.height() - 17);
+                jOptins.css('top', elOffset.top + elementChildren.height() + 15);
             }
 
-            jOptins.css('left', elOffset.left);
-        }
+            jOptinsParent.css('left', elOffset.left);
+        } 
 
 
         function mdFixes() {
