@@ -63,6 +63,8 @@ export class StfSelectDirective {
         if (scope.fixNgModal)
             mdFixes();
 
+        let jqSelectOptions = element.find('.stf-select__options');
+
         let self = this;
         let elementChildren = element.children('.stf-select');
         let valueClicked = false;
@@ -117,8 +119,8 @@ export class StfSelectDirective {
         ); 
 
         let scrollListener = _.debounce(()=>{
-            console.log('scroll');
-        }, 200);
+            calculatePositionAnsSize();
+        }, 100);
         document.addEventListener('scroll', function(e){
              scrollListener();
          }, true);
@@ -157,9 +159,7 @@ export class StfSelectDirective {
                     setTimeout(() => jqFilterInput.focus(), 200); 
                 }
 
-                if(newValue !== oldValue){
-                    calculatePositionAnsSize();
-                }
+                calculatePositionAnsSize();
             }
 
         });
@@ -208,14 +208,18 @@ export class StfSelectDirective {
         let jOptinsParent = jOptins.parent();
         function calculatePositionAnsSize() 
         {
-            let jOptinsParent = jOptins.parent();
+            if(!scope.focused){
+                return;
+            }
+
             let elOffset = element.offset();
+            
             jOptinsParent.width(elementChildren.width()); 
             jOptins.width(elementChildren.width()); 
-            if((elOffset.top + 450 + elementChildren.height()) > self.$window.outerHeight){
-                jOptins.css('top', elOffset.top - elementChildren.height() - 220);
+            if((jqSelectOptions.offset().top + elementChildren.height() + 125 + jOptins.height()) > self.$window.outerHeight){
+                jOptins.css('top', elOffset.top - jOptins.height() - 10);
             } else {
-                jOptins.css('top', elOffset.top + elementChildren.height() + 15);
+                jOptins.css('top', jqSelectOptions.offset().top);
             }
 
             jOptins.css('left', elOffset.left);

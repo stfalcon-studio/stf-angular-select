@@ -1,6 +1,6 @@
 {
   "name": "stf-angular-select",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "Custom reusable select for angular with wide posibilities",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
