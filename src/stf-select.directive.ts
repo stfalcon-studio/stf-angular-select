@@ -16,6 +16,7 @@ export interface IScopeStfSelect extends angular.IScope {
     selectId: number;
     ngDisabled: boolean,
     disabled: boolean,
+    optionsClass: string;
 }
 
 export class StfSelectDirective {
@@ -41,9 +42,10 @@ export class StfSelectDirective {
     restrict: string = 'E';
     require = "ngModel";
     scope: any = {
-        fixNgModal: "<",    
+        fixNgModal: "<",
         ngDisabled: "<",
         disabled: "<",
+        optionsClass: "<"
     };
     transclude: any = {
         label: 'stfSelectLabel',
@@ -116,18 +118,18 @@ export class StfSelectDirective {
         const windowResizeObservable: Observable<any> = Observable.fromEvent(this.$window, 'resize').throttleTime(100);
         const windowResizeSubscription = windowResizeObservable.subscribe(
             event => calculatePositionAnsSize()
-        ); 
+        );
 
-        let scrollListener = _.debounce(()=>{
+        let scrollListener = _.debounce(() => {
             calculatePositionAnsSize();
         }, 100);
-        document.addEventListener('scroll', function(e){
-             scrollListener();
-         }, true);
+        document.addEventListener('scroll', function (e) {
+            scrollListener();
+        }, true);
 
 
         const jqFilterInput = element.find('.stf-select__search-input input');
-        
+
         const elementMouseWheelObservable = Observable.fromEvent(element, "mousewheel");
         const elementMouseWheelSubscription = elementMouseWheelObservable.subscribe((event: any) => {
 
@@ -156,7 +158,7 @@ export class StfSelectDirective {
 
             if (scope.focused) {
                 if (jqFilterInput.length) {
-                    setTimeout(() => jqFilterInput.focus(), 200); 
+                    setTimeout(() => jqFilterInput.focus(), 200);
                 }
 
                 calculatePositionAnsSize();
@@ -190,10 +192,13 @@ export class StfSelectDirective {
             }
         });
 
-        $('body').append(this.$compile(`<div 
-        ng-class="{'stf-select_has-value': ngModel? true : false, 'stf-select_focused': focused, 'stf-select_disabled': disabled || ngDisabled}">
-                <div class="stf-select__options"  id="stf-select-optins-${scope.selectId}"></div>
-            </div>`)(scope));
+        $('body').append(this.$compile(`
+        <div ng-attr-class="{{optionsClass}}">
+            <div ng-class="{'stf-select_has-value': ngModel? true : false, 
+                        'stf-select_focused': focused, 'stf-select_disabled': disabled || ngDisabled}">
+                    <div class="stf-select__options"  id="stf-select-optins-${scope.selectId}"></div>
+            </div>
+        </div>`)(scope));
         let jOptins = $(`#stf-select-optins-${scope.selectId}`);
         jOptins.append(options);
         jOptins.append('<div class="stf-select__fixed-option"></div>');
@@ -201,29 +206,28 @@ export class StfSelectDirective {
 
 
         calculatePositionAnsSize();
-        setTimeout(()=>calculatePositionAnsSize(), 200);
-        setTimeout(()=>calculatePositionAnsSize(), 500);
-        setTimeout(()=>calculatePositionAnsSize(), 1000); 
-         
+        setTimeout(() => calculatePositionAnsSize(), 200);
+        setTimeout(() => calculatePositionAnsSize(), 500);
+        setTimeout(() => calculatePositionAnsSize(), 1000);
+
         let jOptinsParent = jOptins.parent();
-        function calculatePositionAnsSize() 
-        {
-            if(!scope.focused){
+        function calculatePositionAnsSize() {
+            if (!scope.focused) {
                 return;
             }
 
             let elOffset = element.offset();
-            
-            jOptinsParent.width(elementChildren.width()); 
-            jOptins.width(elementChildren.width()); 
-            if((jqSelectOptions.offset().top + elementChildren.height() + 125 + jOptins.height()) > self.$window.outerHeight){
+
+            jOptinsParent.width(elementChildren.width());
+            jOptins.width(elementChildren.width());
+            if ((jqSelectOptions.offset().top + elementChildren.height() + 125 + jOptins.height()) > self.$window.outerHeight) {
                 jOptins.css('top', elOffset.top - jOptins.height() - 10);
             } else {
                 jOptins.css('top', jqSelectOptions.offset().top);
             }
 
             jOptins.css('left', elOffset.left);
-        } 
+        }
 
 
         function mdFixes() {
