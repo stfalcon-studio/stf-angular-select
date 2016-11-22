@@ -200,10 +200,10 @@ export class StfSelectDirective {
         {
             let elOffset = element.offset();
             jOptins.width(elementChildren.width()); 
-            if((elOffset.top + 420 + element.height()) > self.$window.outerHeight){
-                jOptins.css('top', elOffset.top - element.height() - 180);
+            if((elOffset.top + 420 + elementChildren.height()) > self.$window.outerHeight){
+                jOptins.css('top', elOffset.top - elementChildren.height() - 180);
             } else {
-                jOptins.css('top', elOffset.top + element.height() - 17);
+                jOptins.css('top', elOffset.top + elementChildren.height() - 17);
             }
 
             jOptins.css('left', elOffset.left);
