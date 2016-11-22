@@ -114,12 +114,18 @@ export class StfSelectDirective {
         const windowResizeObservable: Observable<any> = Observable.fromEvent(this.$window, 'resize').throttleTime(100);
         const windowResizeSubscription = windowResizeObservable.subscribe(
             event => calculatePositionAnsSize()
-        );
+        ); 
 
+        let scrollListener = _.debounce(()=>{
+            console.log('scroll');
+        }, 200);
+        document.addEventListener('scroll', function(e){
+             scrollListener();
+         }, true);
 
 
         const jqFilterInput = element.find('.stf-select__search-input input');
-
+        
         const elementMouseWheelObservable = Observable.fromEvent(element, "mousewheel");
         const elementMouseWheelSubscription = elementMouseWheelObservable.subscribe((event: any) => {
 
@@ -167,6 +173,7 @@ export class StfSelectDirective {
             elementMouseWheelSubscription.unsubscribe();
             elemetClickSubscription.unsubscribe();
             iconElSubscription.unsubscribe();
+            document.removeEventListener('scroll');
         });
 
         const transcludeEls = transcludeFn();
