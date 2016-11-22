@@ -78,7 +78,6 @@ export class StfSelectDirective {
         const valueContainer = element.find('.stf-select__inner-wrapper');
         const valueContainerObservable: Observable<any> = Observable.fromEvent(valueContainer, 'click').throttleTime(this._NP_STF_SELECT_THROTTLE_TIME);
         const valueContainerSubscription = valueContainerObservable.subscribe(event => {
-            console.log('value click');
             if (!scope.disabled && !scope.ngDisabled) {
                 valueClicked = true;
                 scope.focused = true;
@@ -87,18 +86,14 @@ export class StfSelectDirective {
 
         });
 
-        let ll = 333;
         const iconEl = element.find('.stf-select__icon');
         const iconElObservable: Observable<any> = Observable.fromEvent(iconEl, 'click').throttleTime(this._NP_STF_SELECT_THROTTLE_TIME);
         const iconElSubscription = iconElObservable.subscribe(event => {
-            console.log(ll, scope.focused);
             if (scope.focused) {
                 event.stopPropagation();
                 scope.focused = false;
                 scope.$apply();
             }
-            console.log(666, scope.focused);
-            ll++;
         });
 
         const windowClickObservable: Observable<any> = Observable.fromEvent(this.$window, 'click').throttleTime(100);
@@ -163,7 +158,7 @@ export class StfSelectDirective {
         const transcludeEls = transcludeFn();
         
         let options;
-        let fixed;
+        let fixedOpt;
         console.log(transcludeEls);
         _.each(transcludeEls, el=>{
             if(el.tagName === "STF-SELECT-OPTIONS"){
@@ -171,13 +166,16 @@ export class StfSelectDirective {
             }
             
             if(el.tagName === "STF-FIXED-OPTION"){
-                fixed = el;
+                fixedOpt = el;
             }
         });
 
         $('body').append(`<div class="stf-select__options" id="stf-select-optins-${scope.selectId}"></div>`);
         let jOptins = $(`#stf-select-optins-${scope.selectId}`);
-        jOptins.append(options); 
+        jOptins.append(options);
+        jOptins.append('<div class="stf-select__fixed-option"></div>');
+        jOptins.children('.stf-select__fixed-option').append(fixedOpt);
+
 
         function mdFixes() {
             const $modalContent = element.closest('.modal-content');
