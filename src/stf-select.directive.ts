@@ -227,27 +227,6 @@ export class StfSelectDirective {
 
 
         function mdFixes() {
-            /*const $modalContent = element.closest('.modal-content');
-            const $modalContentZIndex = $modalContent.css("z-index") || 0;
-
-            scope.$watch('focused', (newValue: boolean, oldValue) => {
-
-                if (scope.focused) {
-
-                    $modalContent.css('overflow', 'visible');
-                    $modalContent.css('z-index', 1);
-                } else {
-                    $modalContent.css('overflow', 'hidden');
-                    $modalContent.css('z-index', $modalContentZIndex);
-                }
-
-            });
-
-            scope.$on('$destroy', () => {
-                $modalContent.css('z-index', $modalContentZIndex);
-            });*/
-
-
         }
     }
 
