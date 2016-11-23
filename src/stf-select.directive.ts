@@ -123,9 +123,7 @@ export class StfSelectDirective {
         let scrollListener = _.debounce(() => {
             calculatePositionAnsSize();
         }, 100);
-        document.addEventListener('scroll', function (e) {
-            scrollListener();
-        }, true);
+        document.addEventListener('scroll', scrollListener, true);
 
 
         const jqFilterInput = element.find('.stf-select__search-input input');
@@ -175,7 +173,7 @@ export class StfSelectDirective {
             elementMouseWheelSubscription.unsubscribe();
             elemetClickSubscription.unsubscribe();
             iconElSubscription.unsubscribe();
-            document.removeEventListener('scroll');
+            document.removeEventListener('scroll', scrollListener, true);
         });
 
         const transcludeEls = transcludeFn();
