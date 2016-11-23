@@ -230,6 +230,15 @@ export class StfSelectDirective {
 
         function mdFixes() {
         }
+
+        function scrollUnscrollContainers()
+        {
+            if(scope.focused){
+                $('body, .modal-content').css('overflow-y', 'hidden');
+            } else {
+                $('body, .modal-content').css('overflow-y', 'auto');
+            }
+        }
     }
 
     public static Factory($translate: angular.translate.ITranslateService, $window: angular.IWindowService, $compile: angular.ICompileService, NP_STF_SELECT_THROTTLE_TIME: number) {
