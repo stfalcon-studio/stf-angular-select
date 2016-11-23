@@ -160,6 +160,7 @@ export class StfSelectDirective {
                 }
 
                 calculatePositionAnsSize();
+                scrollUnscrollContainers();
             }
 
         });
