@@ -64,7 +64,7 @@ export class StfSelectDirective {
     link(scope: IScopeStfSelect, element, attributes: any, ngModelController: angular.INgModelController, transcludeFn: angular.ITranscludeFunction) {
         if (scope.fixNgModal)
             mdFixes();
-
+        let openScrollTimerId;
         let jqSelectOptions = element.find('.stf-select__options');
 
         let self = this;
@@ -160,9 +160,8 @@ export class StfSelectDirective {
                 }
 
                 calculatePositionAnsSize();
-                scrollUnscrollContainers();
             }
-
+            scrollUnscrollContainers();
         });
 
 
@@ -175,6 +174,8 @@ export class StfSelectDirective {
             elemetClickSubscription.unsubscribe();
             iconElSubscription.unsubscribe();
             document.removeEventListener('scroll', scrollListener, true);
+            $('body, .modal-content').css('overflow-y', 'auto');
+            clearTimeout(openScrollTimerId);
         });
 
         const transcludeEls = transcludeFn();
@@ -235,7 +236,9 @@ export class StfSelectDirective {
         function scrollUnscrollContainers()
         {
             if(scope.focused){
-                $('body, .modal-content').css('overflow-y', 'hidden');
+                let jqContainer = $('body, .modal-content');
+                jqContainer.css('overflow-y', 'hidden');
+                openScrollTimerId = setTimeout(()=>jqContainer.css('overflow-y', 'hidden'), 200);
             } else {
                 $('body, .modal-content').css('overflow-y', 'auto');
             }
