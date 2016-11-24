@@ -108,13 +108,6 @@ $important-message-background: #ffe6e5;
   }
   stf-select-option {
     display: block;
-    &:first-child {
-      padding-top: 8px;
-    }
-
-    &:last-child {
-      padding-bottom: 8px;
-    }
   }
 }
 
@@ -123,6 +116,18 @@ stf-select-options {
   max-height: 200px;
   overflow-y: auto;
   overflow-x: hidden;
+
+  stf-select-option {
+    display: block;
+    &:first-child {
+      padding-top: 8px;
+    }
+
+    &:last-child {
+      padding-bottom: 8px;
+    }
+  }
+
   &::-webkit-scrollbar {
     width: 8px;
   }
