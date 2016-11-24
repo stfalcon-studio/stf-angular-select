@@ -78,10 +78,11 @@ $important-message-background: #ffe6e5;
     width: 100%;
     min-width: 136px;
     min-height: 0;
-    display: none;
+    //display: none;
+    visibility: hidden;
     position: absolute;
     top: 50px;
-    z-index: 7;
+    z-index: -10;
     background-color: #fafafa;
     box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
   }
@@ -213,7 +214,8 @@ stf-fixed-option {
       border-bottom: 2px solid $black-color;
     }
     &__options {
-      display: block;
+      visibility: visible;
+      z-index: 200;
     }
     &__icon {
       &:after {
