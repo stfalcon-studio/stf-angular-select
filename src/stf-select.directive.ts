@@ -169,7 +169,7 @@ export class StfSelectDirective {
             valueContainerSubscription.unsubscribe();
             windowClickSubscription.unsubscribe();
             windowResizeSubscription.unsubscribe();
-            jOptinsParent.remove();
+            jOptinsParent.parent().remove();
             elementMouseWheelSubscription.unsubscribe();
             elemetClickSubscription.unsubscribe();
             iconElSubscription.unsubscribe();
