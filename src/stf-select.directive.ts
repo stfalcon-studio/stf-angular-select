@@ -160,11 +160,16 @@ export class StfSelectDirective {
                 }
                 scrollUnscrollContainers();
                 calculatePositionAnsSize();
-            }else {
+            } else {
                 scrollUnscrollContainers();
             }
         });
 
+        let options;
+        let fixedOpt;
+        let jOptins;
+        let jOptinsParent;
+        let transcludedScope: angular.IScope;
 
         scope.$on('$destroy', () => {
             valueContainerSubscription.unsubscribe();
@@ -177,41 +182,43 @@ export class StfSelectDirective {
             document.removeEventListener('scroll', scrollListener, true);
             $('body, .modal-content').css('overflow-y', 'auto');
             clearTimeout(openScrollTimerId);
+            transcludedScope.$destroy();
         });
 
-        const transcludeEls = transcludeFn();
+        transcludeFn((transcludeEls, scopeTr: angular.IScope) => {
+            _.each(transcludeEls, el => {
+                if (el.tagName === "STF-SELECT-OPTIONS") {
+                    options = el;
+                }
 
-        let options;
-        let fixedOpt;
-        _.each(transcludeEls, el => {
-            if (el.tagName === "STF-SELECT-OPTIONS") {
-                options = el;
-            }
+                if (el.tagName === "STF-FIXED-OPTION") {
+                    fixedOpt = el;
+                }
+            });
 
-            if (el.tagName === "STF-FIXED-OPTION") {
-                fixedOpt = el;
-            }
+            transcludedScope = scopeTr;
+
+
+            $('body').append(this.$compile(`
+                <div ng-attr-class="{{optionsClass}}">
+                    <div ng-class="{'stf-select_has-value': ngModel? true : false, 
+                                'stf-select_focused': focused, 'stf-select_disabled': disabled || ngDisabled}">
+                            <div class="stf-select__options"  id="stf-select-optins-${scope.selectId}"></div>
+                    </div>
+                </div>
+            `)(scope));
+
+            jOptins = $(`#stf-select-optins-${scope.selectId}`);
+            jOptins.append(options);
+            jOptins.append('<div class="stf-select__fixed-option"></div>');
+            jOptins.children('.stf-select__fixed-option').append(fixedOpt);
+            jOptinsParent = jOptins.parent();
         });
 
-        $('body').append(this.$compile(`
-        <div ng-attr-class="{{optionsClass}}">
-            <div ng-class="{'stf-select_has-value': ngModel? true : false, 
-                        'stf-select_focused': focused, 'stf-select_disabled': disabled || ngDisabled}">
-                    <div class="stf-select__options"  id="stf-select-optins-${scope.selectId}"></div>
-            </div>
-        </div>`)(scope));
-        let jOptins = $(`#stf-select-optins-${scope.selectId}`);
-        jOptins.append(options);
-        jOptins.append('<div class="stf-select__fixed-option"></div>');
-        jOptins.children('.stf-select__fixed-option').append(fixedOpt);
 
 
-        calculatePositionAnsSize();
-        setTimeout(() => calculatePositionAnsSize(), 200);
-        setTimeout(() => calculatePositionAnsSize(), 500);
-        setTimeout(() => calculatePositionAnsSize(), 1000);
+        //calculatePositionAnsSize();
 
-        let jOptinsParent = jOptins.parent();
         function calculatePositionAnsSize() {
             if (!scope.focused) {
                 return;
@@ -234,12 +241,11 @@ export class StfSelectDirective {
         function mdFixes() {
         }
 
-        function scrollUnscrollContainers()
-        {
-            if(scope.focused){
+        function scrollUnscrollContainers() {
+            if (scope.focused) {
                 let jqContainer = $('body, .modal-content');
                 jqContainer.css('overflow-y', 'hidden');
-                openScrollTimerId = setTimeout(()=>jqContainer.css('overflow-y', 'hidden'), 200);
+                openScrollTimerId = setTimeout(() => jqContainer.css('overflow-y', 'hidden'), 200);
             } else {
                 $('body, .modal-content').css('overflow-y', 'auto');
             }
