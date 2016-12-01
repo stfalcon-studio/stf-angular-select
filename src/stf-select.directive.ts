@@ -157,7 +157,7 @@ export class StfSelectDirective {
 
             if (scope.focused) {
                 if (jqFilterInput.length) {
-                    setTimeout(() => jqFilterInput.focus(), 200);
+                    setTimeout(() => jqFilterInput.first().focus(), 200);
                 }
                 scrollUnscrollContainers();
                 calculatePositionAnsSize();
