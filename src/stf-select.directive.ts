@@ -224,13 +224,15 @@ export class StfSelectDirective {
                 return;
             }
 
-            let elOffset = element.offset();
+            let elOffset = element.children('.stf-select').offset();
 
             jOptinsParent.width(elementChildren.width());
             jOptins.width(elementChildren.width());
             if ((jqSelectOptions.offset().top + elementChildren.height() + 125 + jOptins.height()) > self.$window.outerHeight) {
-                jOptins.css('top', elOffset.top - jOptins.height() - 10);
+                jOptinsParent.addClass('top');
+                jOptins.css('top', elOffset.top - jOptins.height() - 25);
             } else {
+                jOptinsParent.removeClass('top'); 
                 jOptins.css('top', jqSelectOptions.offset().top);
             }
 
