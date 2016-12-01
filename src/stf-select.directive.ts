@@ -72,13 +72,6 @@ export class StfSelectDirective {
         let valueClicked = false;
 
         ngModelController.$render = () => scope.ngModel = ngModelController.$viewValue;
-        let labelDiv = $('<div class="stf-select__fake-label">tt</div>');
-        labelDiv.css("position", "absolute");
-        labelDiv.css("top", "3px");
-        labelDiv.css("transform", "translateY(-22px) translateX(0px) scale(0.75)");
-        labelDiv.css("opacity", "0");
-        labelDiv.css("z-index", "-100");
-        element.children().append(labelDiv);
 
 
         scope.selectId = Math.round(Math.random() * 100000000000);
@@ -232,13 +225,13 @@ export class StfSelectDirective {
                 return;
             }
 
-            let elOffset = element.find('.stf-select__fake-label').offset();
+            let elOffset = element.children().offset();
 
             jOptinsParent.width(elementChildren.width());
             jOptins.width(elementChildren.width());
             if ((jqSelectOptions.offset().top + elementChildren.height() + 125 + jOptins.height()) > self.$window.outerHeight) {
                 jOptinsParent.addClass('top');
-                jOptins.css('top', elOffset.top - jOptins.height() - 15);
+                jOptins.css('top', elOffset.top - jOptins.height() - 28);
             } else {
                 jOptinsParent.removeClass('top'); 
                 jOptins.css('top', jqSelectOptions.offset().top);
