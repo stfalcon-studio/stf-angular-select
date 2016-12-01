@@ -180,7 +180,7 @@ export class StfSelectDirective {
             elemetClickSubscription.unsubscribe();
             iconElSubscription.unsubscribe();
             document.removeEventListener('scroll', scrollListener, true);
-            $('body, .modal-content').css('overflow-y', 'auto');
+            $('body, .modal-content').css('overflow-y', '');
             clearTimeout(openScrollTimerId);
             transcludedScope.$destroy();
         });
@@ -247,7 +247,7 @@ export class StfSelectDirective {
                 jqContainer.css('overflow-y', 'hidden');
                 openScrollTimerId = setTimeout(() => jqContainer.css('overflow-y', 'hidden'), 200);
             } else {
-                $('body, .modal-content').css('overflow-y', 'auto');
+                $('body, .modal-content').css('overflow-y', '');
             }
         }
     }
