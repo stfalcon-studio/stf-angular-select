@@ -229,7 +229,14 @@ export class StfSelectDirective {
 
             jOptinsParent.width(elementChildren.width());
             jOptins.width(elementChildren.width());
-            if ((jqSelectOptions.offset().top + elementChildren.height() + 125 + jOptins.height()) > self.$window.outerHeight) {
+            if (
+                (jqSelectOptions.offset().top 
+                    + jOptins.height() + 10
+                ) 
+                > (window.innerHeight 
+                    || document.documentElement.clientHeight 
+                    || document.body.clientHeight)
+            ){
                 jOptinsParent.addClass('top');
                 jOptins.css('top', elOffset.top - jOptins.height() - 28);
             } else {
