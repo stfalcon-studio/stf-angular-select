@@ -189,6 +189,7 @@ export class StfSelectDirective {
                 }
                 scrollUnscrollContainers();
                 calculatePositionAnsSize();
+                setTimeout(()=>calculatePositionAnsSize(), 300);
             } else {
                 scrollUnscrollContainers();
             }
