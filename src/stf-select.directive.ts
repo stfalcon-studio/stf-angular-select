@@ -27,7 +27,7 @@ export class StfSelectDirective {
     <section class="stf-select__container"> 
         <section class="stf-select__inner-wrapper">
             <div class="stf-select__value" ng-transclude="value"></div>
-            <div class="stf-select__placeholder" ng-transclude="label"></div>
+            <div class="stf-select__placeholder"  ng-transclude="label"></div>
             <div class="stf-select__icon"></div>
         </section>
 
@@ -66,6 +66,7 @@ export class StfSelectDirective {
             mdFixes();
         let openScrollTimerId;
         let jqSelectOptions = element.find('.stf-select__options');
+        let placeHolder = element.find('.stf-select__placeholder');
 
         let self = this;
         let elementChildren = element.children('.stf-select');
@@ -73,14 +74,41 @@ export class StfSelectDirective {
 
         ngModelController.$render = () => scope.ngModel = ngModelController.$viewValue;
 
+        /*element.find('.stf-select__search-input input')
+            .focus(()=>{
+                console.log('focus');
+                if (!scope.disabled && !scope.ngDisabled) {
+                    valueClicked = true;
+                    scope.focused = true;
+                    scope.$apply();
+                }
+            })
+            .blur(() =>
+            )
+        ;*/
+
 
         scope.selectId = Math.round(Math.random() * 100000000000);
         element.attr('data-stf-select-id', scope.selectId);
         const $body = $('body');
-        const elemetClickSubscription = Observable.fromEvent(element.find('.stf-select__search-input'), 'click')
+        const $searchInputContainer = element.find('.stf-select__search-input');
+        const $searchInput = $searchInputContainer.find('input');
+        const elemetClickSubscription = Observable.fromEvent($searchInputContainer, 'click')
             .subscribe((event: any) => {
                 event.stopPropagation();
             });
+
+        const $searchInputFocusSubscription = Observable.fromEvent($searchInput, 'focus')
+            .subscribe((event: any) => {
+                showDropDown();
+            });
+
+        const $searchInputBlurSubscription = Observable.fromEvent($searchInput, 'blur')
+            .subscribe((event: any) => {
+                hideDropDown();
+            });
+
+
 
 
         const valueContainer = element.find('.stf-select__inner-wrapper');
@@ -157,7 +185,7 @@ export class StfSelectDirective {
 
             if (scope.focused) {
                 if (jqFilterInput.length) {
-                    setTimeout(() => jqFilterInput.first().focus(), 200);
+                    setTimeout(() => scope.focused && jqFilterInput.first().focus(), 200);
                 }
                 scrollUnscrollContainers();
                 calculatePositionAnsSize();
@@ -183,6 +211,7 @@ export class StfSelectDirective {
             document.removeEventListener('scroll', scrollListener, true);
             $('body, .modal-content').css('overflow-y', '');
             clearTimeout(openScrollTimerId);
+            $searchInputFocusSubscription.unsubscribe();
             transcludedScope.$destroy();
         });
 
@@ -230,17 +259,17 @@ export class StfSelectDirective {
             jOptinsParent.width(elementChildren.width());
             jOptins.width(elementChildren.width());
             if (
-                (jqSelectOptions.offset().top 
+                (jqSelectOptions.offset().top
                     + jOptins.height() + 10
-                ) 
-                > (window.innerHeight 
-                    || document.documentElement.clientHeight 
+                )
+                > (window.innerHeight
+                    || document.documentElement.clientHeight
                     || document.body.clientHeight)
-            ){
+            ) {
                 jOptinsParent.addClass('top');
                 jOptins.css('top', elOffset.top - jOptins.height() - 28);
             } else {
-                jOptinsParent.removeClass('top'); 
+                jOptinsParent.removeClass('top');
                 jOptins.css('top', jqSelectOptions.offset().top);
             }
 
@@ -259,6 +288,21 @@ export class StfSelectDirective {
             } else {
                 $('body, .modal-content').css('overflow-y', '');
             }
+        }
+
+        function showDropDown() {
+            if (!scope.disabled && !scope.ngDisabled) {
+                valueClicked = true;
+                scope.focused = true;
+                scope.$apply();
+            }
+        }
+
+        function hideDropDown() {
+            scope.focused = false;
+            setTimeout(() => {
+                scope.focused || scope.$applyAsync();
+            }, 200);
         }
     }
 
