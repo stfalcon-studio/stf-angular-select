@@ -15,4 +15,8 @@ export class ExampleAppController
         {id: "6", description: 'Address 6'},
         {id: "7", description: 'Address 7'},
     ]
+
+    clickFiced(){
+        console.log('fixed click');
+    }
 }

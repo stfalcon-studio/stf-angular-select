@@ -158,6 +158,13 @@ stf-fixed-option {
     background: #eeeeee;
   }
 }
+
+.stf-select__fixed-option{
+  &:focus {
+    background: #eeeeee;
+  }
+}
+
 .stf-select-option {
   min-height: 48px;
   position: relative;
@@ -169,7 +176,7 @@ stf-fixed-option {
   outline: none;
   cursor: pointer;
   box-sizing: border-box;
-  &:hover {
+  &:hover, &:focus {
     background: rgb(238, 238, 238)
   }
   &_error{
@@ -183,6 +190,9 @@ stf-fixed-option {
   top: 0;
   z-index: -1;
   background: transparent;
+  input {
+    visibility: hidden;
+  }
 }
 .stf-select_has-value {
   .stf-select {
@@ -203,7 +213,16 @@ stf-fixed-option {
       background: $white-color;
     }
   }
+} 
+
+.stf-select__tab-focus{
+  .stf-select {
+    &__container {
+      border-bottom: 2px solid $black-color;
+    }
+  }
 }
+
 .stf-select_focused {
   .stf-select {
     &__placeholder {
@@ -235,6 +254,7 @@ stf-fixed-option {
       width: 100%;
       padding-right: 35px;
       input {
+        visibility: visible;
         font-size: 16px;
         line-height: 22px;
         font-weight: 400;

@@ -1,3 +1,4 @@
+import { IOptionScope } from './../dist/stf-select-option.directive.d';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
@@ -31,9 +32,9 @@ export class StfSelectDirective {
             <div class="stf-select__icon"></div>
         </section>
 
-        <section class="stf-select__search-input" ng-transclude="searchInput"></section>
+        <section class="stf-select__search-input" tabindex="0" ng-transclude="searchInput"></section>
         <section class="stf-select__options">
-        <div class="stf-select__fixed-option"></div>
+        <div class="stf-select__fixed-option sss"></div>    
         </section>
     </section>
 </section>
@@ -74,41 +75,60 @@ export class StfSelectDirective {
 
         ngModelController.$render = () => scope.ngModel = ngModelController.$viewValue;
 
-        /*element.find('.stf-select__search-input input')
-            .focus(()=>{
-                console.log('focus');
-                if (!scope.disabled && !scope.ngDisabled) {
-                    valueClicked = true;
-                    scope.focused = true;
-                    scope.$apply();
-                }
-            })
-            .blur(() =>
-            )
-        ;*/
-
-
         scope.selectId = Math.round(Math.random() * 100000000000);
         element.attr('data-stf-select-id', scope.selectId);
         const $body = $('body');
         const $searchInputContainer = element.find('.stf-select__search-input');
-        const $searchInput = $searchInputContainer.find('input');
+
         const elemetClickSubscription = Observable.fromEvent($searchInputContainer, 'click')
             .subscribe((event: any) => {
                 event.stopPropagation();
             });
 
-        const $searchInputFocusSubscription = Observable.fromEvent($searchInput, 'focus')
+        $searchInputContainer.delegate("input", "keydown", function(event){
+            
+        });
+
+        const $searchInputContainerKeyDownSubscription = Observable.fromEvent($searchInputContainer, 'keydown')
+            .subscribe(
+            (event: any) => {
+                var keyCode = event.keyCode || event.which;
+                if (scope.focused) {
+                    switch (keyCode) {
+                        case 9: hideDropDown();
+                            break;
+                        case 40: selectKeyDownPressed();
+                            break;
+                        case 38: selectKeyUpPressed();
+                            break;
+                    }
+                }
+            }
+            );
+
+
+
+        const $searchInputFocusSubscription = Observable.fromEvent($searchInputContainer, 'focus')
             .subscribe((event: any) => {
-                showDropDown();
+                elementChildren.addClass('stf-select__tab-focus');
             });
 
-        const $searchInputBlurSubscription = Observable.fromEvent($searchInput, 'blur')
+        const $searchInputBlurSubscription = Observable.fromEvent($searchInputContainer, 'blur')
             .subscribe((event: any) => {
-                hideDropDown();
+                elementChildren.removeClass('stf-select__tab-focus');
             });
 
 
+        const $searchInputKePressSubscription = Observable.fromEvent($searchInputContainer, 'click keyup')
+            .subscribe((event: any) => {
+                if (event.keyCode === 27) {
+                    hideDropDown();
+                } else if (event.keyCode === 9) {
+                    return true;
+                } else {
+                    showDropDown();
+                }
+            });
 
 
         const valueContainer = element.find('.stf-select__inner-wrapper');
@@ -121,6 +141,8 @@ export class StfSelectDirective {
             }
 
         });
+
+
 
         const iconEl = element.find('.stf-select__icon');
         const iconElObservable: Observable<any> = Observable.fromEvent(iconEl, 'click').throttleTime(this._NP_STF_SELECT_THROTTLE_TIME);
@@ -177,6 +199,8 @@ export class StfSelectDirective {
                     ngModelController.$setViewValue(value);
                     scope.ngModel = value;
                 }
+
+                setTimeout(() => $searchInputContainer.focus(), 100);
             }
         );
 
@@ -186,10 +210,12 @@ export class StfSelectDirective {
             if (scope.focused) {
                 if (jqFilterInput.length) {
                     setTimeout(() => scope.focused && jqFilterInput.first().focus(), 200);
+                } else if ($searchInputContainer.length) {
+                    setTimeout(() => scope.focused && $searchInputContainer.first().focus(), 200);
                 }
+
                 scrollUnscrollContainers();
                 calculatePositionAnsSize();
-                setTimeout(()=>calculatePositionAnsSize(), 300);
             } else {
                 scrollUnscrollContainers();
             }
@@ -201,20 +227,7 @@ export class StfSelectDirective {
         let jOptinsParent;
         let transcludedScope: angular.IScope;
 
-        scope.$on('$destroy', () => {
-            valueContainerSubscription.unsubscribe();
-            windowClickSubscription.unsubscribe();
-            windowResizeSubscription.unsubscribe();
-            jOptinsParent.parent().remove();
-            elementMouseWheelSubscription.unsubscribe();
-            elemetClickSubscription.unsubscribe();
-            iconElSubscription.unsubscribe();
-            document.removeEventListener('scroll', scrollListener, true);
-            $('body, .modal-content').css('overflow-y', '');
-            clearTimeout(openScrollTimerId);
-            $searchInputFocusSubscription.unsubscribe();
-            transcludedScope.$destroy();
-        });
+
 
         transcludeFn((transcludeEls, scopeTr: angular.IScope) => {
             _.each(transcludeEls, el => {
@@ -241,9 +254,70 @@ export class StfSelectDirective {
 
             jOptins = $(`#stf-select-optins-${scope.selectId}`);
             jOptins.append(options);
-            jOptins.append('<div class="stf-select__fixed-option"></div>');
+            jOptins.append('<div tabindex="0" class="stf-select__fixed-option"></div>');
             jOptins.children('.stf-select__fixed-option').append(fixedOpt);
             jOptinsParent = jOptins.parent();
+
+            jOptins.delegate('.stf-select-option', "keydown", (function (event) {
+                var keyCode = event.keyCode || event.which;
+
+                switch (keyCode) {
+                    case 13:
+                        setTimeout(() => this.click(), 100);
+                        break;
+                    case 9:
+                        hideDropDown();
+                        break;
+                    case 40: {
+                            optionKeyDown($(event.target));
+                            event.preventDefault();
+                        }
+                        break;
+                    case 38: {
+                            optionKeyUp($(event.target));
+                            event.preventDefault();
+                        }
+                        break;
+                }
+            }));
+
+            jOptins.find('.stf-select__fixed-option').keydown(function (event) {
+                var keyCode = event.keyCode || event.which;
+                switch (keyCode) {
+                    case 13: {
+                        jOptins.find('stf-fixed-option').click();
+                        hideDropDown();
+                    }
+                        break;
+                    case 38:
+                        fixedKeyUpPressed();
+                        break;
+                    case 40:
+                        fixedKeyDownPressed();
+                        break;
+                    case 9:
+                        hideDropDown();
+                        break;
+                }
+            });
+        });
+
+
+        scope.$on('$destroy', () => {
+            valueContainerSubscription.unsubscribe();
+            windowClickSubscription.unsubscribe();
+            windowResizeSubscription.unsubscribe();
+            jOptinsParent.parent().remove();
+            elementMouseWheelSubscription.unsubscribe();
+            elemetClickSubscription.unsubscribe();
+            iconElSubscription.unsubscribe();
+
+            document.removeEventListener('scroll', scrollListener, true);
+            $('body, .modal-content').css('overflow-y', '');
+            clearTimeout(openScrollTimerId);
+            $searchInputFocusSubscription.unsubscribe();
+            $searchInputKePressSubscription.unsubscribe();
+            transcludedScope.$destroy();
         });
 
 
@@ -289,7 +363,7 @@ export class StfSelectDirective {
             } else {
                 $('body, .modal-content').css('overflow-y', '');
             }
-        }
+        } element
 
         function showDropDown() {
             if (!scope.disabled && !scope.ngDisabled) {
@@ -301,9 +375,78 @@ export class StfSelectDirective {
 
         function hideDropDown() {
             scope.focused = false;
+            $searchInputContainer.focus();
             setTimeout(() => {
                 scope.focused || scope.$applyAsync();
-            }, 200);
+            }, 0);
+        }
+
+        function selectKeyDownPressed() {
+            setTimeout(() => jOptins.find('.stf-select-option').first().focus(), 100);
+        }
+
+        function selectKeyUpPressed() {
+            let elementForFocus = jOptins.find('.stf-select__fixed-option').last();
+
+            if (!elementForFocus.length) {
+                elementForFocus = jOptins.find('.stf-select-option').last();
+            }
+
+            setTimeout(() => elementForFocus.focus(), 100);
+        }
+
+        function fixedKeyUpPressed() {
+            let elementForFocus = jOptins.find('.stf-select-option').last();
+
+            if (!elementForFocus.length) {
+                elementForFocus = $searchInputContainer.find('input').length ? $searchInputContainer.find('input') : $searchInputContainer;
+            }
+
+            setTimeout(() => elementForFocus.focus(), 100);
+        }
+
+        function fixedKeyDownPressed() {
+            let elementForFocus = $searchInputContainer.find('input').length ? $searchInputContainer.find('input') : jOptins.find('.stf-select-option').first();
+
+            setTimeout(() => elementForFocus.focus(), 100);
+        }
+
+        function optionKeyDown(element) {
+            let elementForFocus = element.parent().next().children();
+            
+            if(!elementForFocus.length){
+                elementForFocus = jOptins.find('.stf-select__fixed-option');
+            }
+            
+            if(!elementForFocus.length){
+                elementForFocus = $searchInputContainer.find('input');
+            }
+
+            if(!elementForFocus.length){
+                elementForFocus = jOptins.find('.stf-select-option').first();
+            }
+
+            elementForFocus.focus();
+        }
+
+        function optionKeyUp(element) {
+            let elementForFocus = element.parent().prev().children();
+
+            if(!elementForFocus.length){
+                elementForFocus = $searchInputContainer.find('input');
+            }
+
+            
+            if(!elementForFocus.length){
+                elementForFocus = jOptins.find('.stf-select__fixed-option');
+            }
+            
+        
+            if(!elementForFocus.length){
+                elementForFocus = jOptins.find('.stf-select-option').last();
+            }
+
+            elementForFocus.focus();
         }
     }
 

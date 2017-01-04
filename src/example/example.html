@@ -1,5 +1,4 @@
 <div style="height: 300px;"></div>
-<div ng-repeat="item in [1, 2]">
     <np-stf-select name="senderAddress" ng-model="$ctrl.invoice.senderAddress" required ng-change="$ctrl.updateCalculation();"
         options-class="'bla-bla'">
         <stf-select-label>Адреса</stf-select-label>
@@ -9,11 +8,25 @@
                 {{address.description}}
             </stf-select-option>
         </stf-select-options>
-        <stf-fixed-option data-ng-click="$ctrl.addNewAddressSender($ctrl.invoice.sender.id)">
+        <stf-fixed-option data-ng-click="$ctrl.clickFiced()">
+            Fixed option
+        </stf-fixed-option>
+        <stf-search-input>  
+        </stf-search-input>
+    </np-stf-select>
+    <np-stf-select name="senderAddress" ng-model="$ctrl.invoice.senderAddress" required ng-change="$ctrl.updateCalculation();"
+        options-class="'bla-bla'">
+        <stf-select-label>Адреса</stf-select-label>
+        <stf-select-value>{{$ctrl.invoice.senderAddress.description}}</stf-select-value>
+        <stf-select-options>
+            <stf-select-option data-ng-repeat="address in $ctrl.addresses track by address.id" ng-value="address">
+                {{address.description}}
+            </stf-select-option>
+        </stf-select-options>
+        <stf-fixed-option data-ng-click="$ctrl.clickFiced()"> 
             Fixed option
         </stf-fixed-option>
         <stf-search-input>
             <input>
         </stf-search-input>
     </np-stf-select>
-</div>

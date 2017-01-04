@@ -15,7 +15,7 @@ export class StfSelectOptionDirective
     transclude: any =  true;
     restrict: any = 'E';
     template: string = `
-    <section class="stf-select-option" data-ng-click="selectValue()" ng-transclude></section>
+    <section tabindex="0" class="stf-select-option" data-ng-click="selectValue()" ng-transclude></section>
     `;
     scope: any = {
         ngValue: "<?",
