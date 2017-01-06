@@ -86,7 +86,12 @@ export class StfSelectDirective {
             });
 
         $searchInputContainer.delegate("input", "keydown", function (event) {
-
+            let inputs  = $searchInputContainer.find('input');
+            if(inputs.length > 1){
+                if(event.target !== inputs[inputs.length - 1]){
+                    event.stopPropagation();
+                }
+            }
         });
 
         const $searchInputContainerKeyDownSubscription = Observable.fromEvent($searchInputContainer, 'keydown')
