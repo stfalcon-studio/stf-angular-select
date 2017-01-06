@@ -88,7 +88,9 @@ export class StfSelectDirective {
         $searchInputContainer.delegate("input", "keydown", function (event) {
             let inputs  = $searchInputContainer.find('input');
             if(inputs.length > 1){
-                if(event.target !== inputs[inputs.length - 1]){
+                var keyCode = event.keyCode || event.which;
+
+                if(event.target !== inputs[inputs.length - 1] && keyCode === 9){
                     event.stopPropagation();
                 }
             }
