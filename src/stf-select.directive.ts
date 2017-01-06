@@ -393,7 +393,13 @@ export class StfSelectDirective {
         }
 
         function selectKeyDownPressed() {
-            setTimeout(() => jOptins.find('.stf-select-option').first().focus(), 100);
+            let elementForFocus = jOptins.find('.stf-select-option').first();
+            console.log(elementForFocus.length);
+            if(!elementForFocus.length){
+                elementForFocus = jOptins.find('.stf-select__fixed-option');
+            }
+
+            setTimeout(() => elementForFocus.focus(), 100);
         }
 
         function selectKeyUpPressed() {
