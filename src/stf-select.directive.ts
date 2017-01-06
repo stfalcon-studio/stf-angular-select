@@ -399,6 +399,9 @@ export class StfSelectDirective {
         function selectKeyUpPressed() {
             let elementForFocus = jOptins.find('.stf-select__fixed-option').last();
 
+            if(!elementForFocus.children().length)
+                elementForFocus.length = 0;
+
             if (!elementForFocus.length) {
                 elementForFocus = jOptins.find('.stf-select-option').last();
             }
@@ -426,7 +429,10 @@ export class StfSelectDirective {
             let elementForFocus = element.parent().next().children();
 
             if (!elementForFocus.length) {
-                elementForFocus = jOptins.find('.stf-select__fixed-option');
+                let fixed = jOptins.find('.stf-select__fixed-option');
+
+                if(fixed.children().length)
+                    elementForFocus = jOptins.find('.stf-select__fixed-option');
             }
 
             if (!elementForFocus.length) {
@@ -449,9 +455,11 @@ export class StfSelectDirective {
 
 
             if (!elementForFocus.length) {
-                elementForFocus = jOptins.find('.stf-select__fixed-option');
-            }
+                let fixed = jOptins.find('.stf-select__fixed-option');
 
+                if(fixed.children().length)
+                    elementForFocus = jOptins.find('.stf-select__fixed-option');
+            }
 
             if (!elementForFocus.length) {
                 elementForFocus = jOptins.find('.stf-select-option').last();
