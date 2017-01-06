@@ -85,8 +85,8 @@ export class StfSelectDirective {
                 event.stopPropagation();
             });
 
-        $searchInputContainer.delegate("input", "keydown", function(event){
-            
+        $searchInputContainer.delegate("input", "keydown", function (event) {
+
         });
 
         const $searchInputContainerKeyDownSubscription = Observable.fromEvent($searchInputContainer, 'keydown')
@@ -101,8 +101,14 @@ export class StfSelectDirective {
                             break;
                         case 38: selectKeyUpPressed();
                             break;
-                        case 27: hideDropDown(); 
+                        case 27: hideDropDown();
                             break;
+                    }
+                } else {
+                    switch (keyCode) {
+                        case 13:
+                            showDropDown();
+                            break; 
                     }
                 }
             }
@@ -263,14 +269,14 @@ export class StfSelectDirective {
                         hideDropDown();
                         break;
                     case 40: {
-                            optionKeyDown($(event.target));
-                            event.preventDefault();
-                        }
+                        optionKeyDown($(event.target));
+                        event.preventDefault();
+                    }
                         break;
                     case 38: {
-                            optionKeyUp($(event.target));
-                            event.preventDefault();
-                        }
+                        optionKeyUp($(event.target));
+                        event.preventDefault();
+                    }
                         break;
                 }
             }));
@@ -407,16 +413,16 @@ export class StfSelectDirective {
 
         function optionKeyDown(element) {
             let elementForFocus = element.parent().next().children();
-            
-            if(!elementForFocus.length){
+
+            if (!elementForFocus.length) {
                 elementForFocus = jOptins.find('.stf-select__fixed-option');
             }
-            
-            if(!elementForFocus.length){
+
+            if (!elementForFocus.length) {
                 elementForFocus = $searchInputContainer.find('input');
             }
 
-            if(!elementForFocus.length){
+            if (!elementForFocus.length) {
                 elementForFocus = jOptins.find('.stf-select-option').first();
             }
 
@@ -426,17 +432,17 @@ export class StfSelectDirective {
         function optionKeyUp(element) {
             let elementForFocus = element.parent().prev().children();
 
-            if(!elementForFocus.length){
+            if (!elementForFocus.length) {
                 elementForFocus = $searchInputContainer.find('input');
             }
 
-            
-            if(!elementForFocus.length){
+
+            if (!elementForFocus.length) {
                 elementForFocus = jOptins.find('.stf-select__fixed-option');
             }
-            
-        
-            if(!elementForFocus.length){
+
+
+            if (!elementForFocus.length) {
                 elementForFocus = jOptins.find('.stf-select-option').last();
             }
 
