@@ -25,14 +25,14 @@ export class StfSelectDirective {
     template: string = `
 <section class="stf-select" ng-class="{'stf-select_has-value': ngModel? true : false, 'stf-select_focused': focused, 'stf-select_disabled': disabled || ngDisabled}">
     <div class="stf-select__label" ng-transclude="label"></div>
-    <section class="stf-select__container" tabindex="0"> 
+    <section class="stf-select__container" > 
         <section class="stf-select__inner-wrapper">
             <div class="stf-select__value" ng-transclude="value"></div>
             <div class="stf-select__placeholder"  ng-transclude="label"></div>
             <div class="stf-select__icon"></div>
         </section>
 
-        <section class="stf-select__search-input"  ng-transclude="searchInput"></section>
+        <section class="stf-select__search-input" tabindex="0" ng-transclude="searchInput"></section>
         <section class="stf-select__options">
         <div class="stf-select__fixed-option sss"></div>    
         </section>
