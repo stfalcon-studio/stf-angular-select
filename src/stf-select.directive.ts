@@ -278,6 +278,8 @@ export class StfSelectDirective {
                         event.preventDefault();
                     }
                         break;
+                    case 27: hideDropDown();
+                            break;
                 }
             }));
 
@@ -298,6 +300,8 @@ export class StfSelectDirective {
                     case 9:
                         hideDropDown();
                         break;
+                    case 27: hideDropDown();
+                            break;
                 }
             });
         });
