@@ -190,6 +190,8 @@ stf-fixed-option {
   top: 0;
   z-index: -1;
   background: transparent;
+  min-height: 1px;
+  min-width: 1px;
   input {
     visibility: hidden;
   }

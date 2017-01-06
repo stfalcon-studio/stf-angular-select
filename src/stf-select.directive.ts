@@ -25,14 +25,14 @@ export class StfSelectDirective {
     template: string = `
 <section class="stf-select" ng-class="{'stf-select_has-value': ngModel? true : false, 'stf-select_focused': focused, 'stf-select_disabled': disabled || ngDisabled}">
     <div class="stf-select__label" ng-transclude="label"></div>
-    <section class="stf-select__container"> 
+    <section class="stf-select__container" tabindex="0"> 
         <section class="stf-select__inner-wrapper">
             <div class="stf-select__value" ng-transclude="value"></div>
             <div class="stf-select__placeholder"  ng-transclude="label"></div>
             <div class="stf-select__icon"></div>
         </section>
 
-        <section class="stf-select__search-input" tabindex="0" ng-transclude="searchInput"></section>
+        <section class="stf-select__search-input"  ng-transclude="searchInput"></section>
         <section class="stf-select__options">
         <div class="stf-select__fixed-option sss"></div>    
         </section>
@@ -101,6 +101,8 @@ export class StfSelectDirective {
                             break;
                         case 38: selectKeyUpPressed();
                             break;
+                        case 27: hideDropDown(); 
+                            break;
                     }
                 }
             }
@@ -119,15 +121,9 @@ export class StfSelectDirective {
             });
 
 
-        const $searchInputKePressSubscription = Observable.fromEvent($searchInputContainer, 'click keyup')
+        const $searchInputKePressSubscription = Observable.fromEvent($searchInputContainer, 'click')
             .subscribe((event: any) => {
-                if (event.keyCode === 27) {
-                    hideDropDown();
-                } else if (event.keyCode === 9) {
-                    return true;
-                } else {
-                    showDropDown();
-                }
+                showDropDown();
             });
 
 
@@ -177,8 +173,6 @@ export class StfSelectDirective {
         document.addEventListener('scroll', scrollListener, true);
 
 
-        const jqFilterInput = element.find('.stf-select__search-input input');
-
         const elementMouseWheelObservable = Observable.fromEvent(element, "mousewheel");
         const elementMouseWheelSubscription = elementMouseWheelObservable.subscribe((event: any) => {
 
@@ -208,8 +202,8 @@ export class StfSelectDirective {
         scope.$watch('focused', (newValue: boolean, oldValue) => {
 
             if (scope.focused) {
-                if (jqFilterInput.length) {
-                    setTimeout(() => scope.focused && jqFilterInput.first().focus(), 200);
+                if (element.find('.stf-select__search-input input').length) {
+                    setTimeout(() => scope.focused && element.find('.stf-select__search-input input').first().focus(), 200);
                 } else if ($searchInputContainer.length) {
                     setTimeout(() => scope.focused && $searchInputContainer.first().focus(), 200);
                 }
