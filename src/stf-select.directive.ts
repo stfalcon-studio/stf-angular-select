@@ -410,16 +410,16 @@ export class StfSelectDirective {
             let elementForFocus = jOptins.find('.stf-select-option').last();
 
             if (!elementForFocus.length) {
-                elementForFocus = $searchInputContainer.find('input').length ? $searchInputContainer.find('input') : $searchInputContainer;
+                elementForFocus = $searchInputContainer.find('input').length ? $searchInputContainer.find('input').first() : $searchInputContainer;
             }
 
             setTimeout(() => elementForFocus.focus(), 100);
         }
 
         function fixedKeyDownPressed() {
-            let elementForFocus = $searchInputContainer.find('input').length ? $searchInputContainer.find('input') : jOptins.find('.stf-select-option').first();
+            let elementForFocus = $searchInputContainer.find('input').length ? $searchInputContainer.find('input').first() : jOptins.find('.stf-select-option').first();
 
-            setTimeout(() => elementForFocus.focus(), 100);
+            setTimeout(() => elementForFocus.focus(), 100); 
         }
 
         function optionKeyDown(element) {
@@ -430,11 +430,11 @@ export class StfSelectDirective {
             }
 
             if (!elementForFocus.length) {
-                elementForFocus = $searchInputContainer.find('input');
+                elementForFocus = $searchInputContainer.find('input').first();
             }
 
             if (!elementForFocus.length) {
-                elementForFocus = jOptins.find('.stf-select-option').first();
+                elementForFocus = jOptins.find('.stf-select-option').first(); 
             }
 
             elementForFocus.focus();
@@ -444,7 +444,7 @@ export class StfSelectDirective {
             let elementForFocus = element.parent().prev().children();
 
             if (!elementForFocus.length) {
-                elementForFocus = $searchInputContainer.find('input');
+                elementForFocus = $searchInputContainer.find('input').first();
             }
 
 
