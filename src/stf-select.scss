@@ -195,6 +195,9 @@ stf-fixed-option {
   input {
     visibility: hidden;
   }
+  &:focus{
+    outline: none;
+  }
 }
 .stf-select_has-value {
   .stf-select {

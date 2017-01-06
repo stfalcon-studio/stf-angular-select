@@ -379,7 +379,7 @@ export class StfSelectDirective {
 
         function hideDropDown() {
             scope.focused = false;
-            $searchInputContainer.focus();
+            //$searchInputContainer.focus();
             setTimeout(() => {
                 scope.focused || scope.$applyAsync();
             }, 0);
