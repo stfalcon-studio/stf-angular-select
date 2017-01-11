@@ -6,7 +6,8 @@
     "sourceMap": true,
     "module": "commonjs",
     "experimentalDecorators": true,
-    "outDir": "out"
+    "outDir": "out",
+    "lib": ["es6", "dom"]
   },
   "exclude": [
     "out",

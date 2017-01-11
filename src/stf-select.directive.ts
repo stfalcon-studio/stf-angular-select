@@ -5,8 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/fromEvent';
-
-const _: _.LoDashStatic = require("lodash");
+import * as _ from "lodash";
 
 
 export interface IScopeStfSelect extends angular.IScope {
@@ -110,6 +109,7 @@ export class StfSelectDirective {
                             break;
                         case 27: hideDropDown();
                             event.preventDefault();
+                            event.stopPropagation();
                             break;
                     }
                 } else {
@@ -288,6 +288,7 @@ export class StfSelectDirective {
                         break;
                     case 27: hideDropDown();
                         event.preventDefault();
+                        event.stopPropagation();
                             break;
                 }
             }));
@@ -311,6 +312,7 @@ export class StfSelectDirective {
                         break;
                     case 27: hideDropDown();
                         event.preventDefault();
+                        event.stopPropagation();
                             break;
                 }
             });

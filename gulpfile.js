@@ -11,7 +11,7 @@ gulp.task('default', function () {
 
 gulp.task('compile', function () {
   var tsProject = ts.createProject('tsconfig.json', { noImplicitAny: false, declaration: true });
-  var tsResult = tsProject.src(['src/index.ts', 'stf-select-option.directive.ts', 'stf-select.directive.ts'])
+  var tsResult = gulp.src(['src/index.ts', 'src/stf-select-option.directive.ts', 'src/stf-select.directive.ts'])
         .pipe(tsProject());
   return merge([ // Merge the two output streams, so this task is finished when the IO of both operations is done. 
         tsResult.dts.pipe(gulp.dest('dist')),
