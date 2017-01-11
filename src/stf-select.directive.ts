@@ -31,7 +31,7 @@ export class StfSelectDirective {
             <div class="stf-select__icon"></div>
         </section>
 
-        <section class="stf-select__search-input" tabindex="0" ng-transclude="searchInput"></section>
+        <section class="stf-select__search-input" tabindex="{{ngDisabled ? '-1' : '0'}}" ng-transclude="searchInput"></section>
         <section class="stf-select__options">
         <div class="stf-select__fixed-option sss"></div>    
         </section>
