@@ -1,4 +1,4 @@
-import { IOptionScope } from './../dist/stf-select-option.directive.d';
+import { IOptionScope } from './stf-select-option.directive';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
@@ -109,6 +109,7 @@ export class StfSelectDirective {
                         case 38: selectKeyUpPressed();
                             break;
                         case 27: hideDropDown();
+                            event.preventDefault();
                             break;
                     }
                 } else {
@@ -286,6 +287,7 @@ export class StfSelectDirective {
                     }
                         break;
                     case 27: hideDropDown();
+                        event.preventDefault();
                             break;
                 }
             }));
@@ -308,6 +310,7 @@ export class StfSelectDirective {
                         hideDropDown();
                         break;
                     case 27: hideDropDown();
+                        event.preventDefault();
                             break;
                 }
             });
