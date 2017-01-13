@@ -1,9 +1,9 @@
 <form>
     <div style="height: 300px;"></div>
-<np-stf-select name="senderAddress" ng-model="$ctrl.invoice.senderAddress" required ng-change="$ctrl.updateCalculation();"
+<np-stf-select name="senderAddress" ng-model="$ctrl.address" required ng-change="$ctrl.updateCalculation();"
     options-class="'bla-bla'">
     <stf-select-label>Адреса</stf-select-label>
-    <stf-select-value>{{$ctrl.invoice.senderAddress.description}}</stf-select-value>
+    <stf-select-value>{{$ctrl.address.description}}</stf-select-value>
     <stf-select-options>
         <stf-select-option data-ng-repeat="address in $ctrl.addresses track by address.id" ng-value="address">
             {{address.description}}

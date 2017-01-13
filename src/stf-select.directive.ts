@@ -72,7 +72,8 @@ export class StfSelectDirective {
         let elementChildren = element.children('.stf-select');
         let valueClicked = false;
 
-        ngModelController.$render = () => scope.ngModel = ngModelController.$viewValue;
+        render();
+        ngModelController.$render = render;
 
         scope.selectId = Math.round(Math.random() * 100000000000);
         element.attr('data-stf-select-id', scope.selectId);
@@ -86,9 +87,9 @@ export class StfSelectDirective {
 
         $searchInputContainer.delegate("input", "keydown", function (event) {
             let inputs  = $searchInputContainer.find('input');
-            if(inputs.length > 1){
-                var keyCode = event.keyCode || event.which;
+            let keyCode = event.keyCode || event.which;
 
+            if(inputs.length > 1){
                 if(event.target !== inputs[inputs.length - 1] && keyCode === 9){
                     event.stopPropagation();
                 }
@@ -110,6 +111,21 @@ export class StfSelectDirective {
                         case 27: hideDropDown();
                             event.preventDefault();
                             event.stopPropagation();
+                            break;
+                        case 13: 
+                            if(keyCode === 13){
+                                event.stopPropagation(); 
+                                let optionForClick = $(`#stf-select-optins-${scope.selectId} .stf-select-option__selected`);
+
+                                if(!optionForClick.length){
+                                    optionForClick = $(`#stf-select-optins-${scope.selectId} .stf-select-option`).first();
+                                }
+
+                                
+                                optionForClick.click();
+
+                                return;
+                            }
                             break;
                     }
                 } else {
@@ -206,6 +222,7 @@ export class StfSelectDirective {
                 if (old !== value) {
                     ngModelController.$setViewValue(value);
                     scope.ngModel = value;
+                    scope.$broadcast('stf-select.value_changed', value);
                 }
 
                 setTimeout(() => $searchInputContainer.focus(), 100);
@@ -477,6 +494,13 @@ export class StfSelectDirective {
             }
 
             elementForFocus.focus();
+        }
+
+        function render(){
+            scope.ngModel = ngModelController.$viewValue;
+            scope.$broadcast('stf-select.value_changed', scope.ngModel);
+
+            return scope.ngModel;
         }
     }
 

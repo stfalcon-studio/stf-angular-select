@@ -1,3 +1,5 @@
+import * as angular from "angular";
+
 export class ExampleAppComponent implements angular.IComponentOptions
 {
     controller = ExampleAppController;
@@ -6,6 +8,8 @@ export class ExampleAppComponent implements angular.IComponentOptions
 
 export class ExampleAppController
 {
+    static $inject = ['$timeout'];
+
     addresses = [
         {id: "1", description: 'Address 1'},
         {id: "2", description: 'Address 2'},
@@ -15,6 +19,12 @@ export class ExampleAppController
         {id: "6", description: 'Address 6'},
         {id: "7", description: 'Address 7'},
     ]
+
+    address;
+
+    constructor($timeout: angular.ITimeoutService){
+        $timeout(()=>this.address = this.addresses[0], 1000);
+    }
 
     clickFiced(){
         console.log('fixed click');
