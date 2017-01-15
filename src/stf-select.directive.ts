@@ -416,7 +416,7 @@ export class StfSelectDirective {
 
         function selectKeyDownPressed() {
             let elementForFocus = jOptins.find('.stf-select-option').first();
-            console.log(elementForFocus.length);
+
             if(!elementForFocus.length){
                 elementForFocus = jOptins.find('.stf-select__fixed-option');
             }
