@@ -22,8 +22,7 @@ export class StfSelectOptionDirective
         value: "@?"
     };
 
-    link(scope: IOptionScope, element, attrs){
-        console.log(scope); 
+    link(scope: IOptionScope, element, attrs){ 
         scope.selectValue = function(){
             scope.$emit("stf-select-option.selected", scope.ngValue || scope.value);
         }
