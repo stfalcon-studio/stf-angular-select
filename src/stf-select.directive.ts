@@ -454,7 +454,13 @@ export class StfSelectDirective {
         }
 
         function optionKeyDown(element) {
-            let elementForFocus = element.parent().next().children();
+            let elementParentFocus = element.parent().next();
+            let elementForFocus = elementParentFocus.children();
+
+            if (!elementForFocus.length) {
+                elementParentFocus = elementParentFocus.next();
+                elementForFocus = elementParentFocus.children();
+            }
 
             if (!elementForFocus.length) {
                 let fixed = jOptins.find('.stf-select__fixed-option');
@@ -475,7 +481,13 @@ export class StfSelectDirective {
         }
 
         function optionKeyUp(element) {
-            let elementForFocus = element.parent().prev().children();
+            let elementParentFocus = element.parent().prev();
+            let elementForFocus = elementParentFocus.children();
+
+            if (!elementForFocus.length) {
+                elementParentFocus = elementParentFocus.prev();
+                elementForFocus = elementParentFocus.children();
+            }
 
             if (!elementForFocus.length) {
                 elementForFocus = $searchInputContainer.find('input').first();

@@ -5,6 +5,8 @@
     <stf-select-label>Адреса</stf-select-label>
     <stf-select-value>{{$ctrl.address.description}}</stf-select-value>
     <stf-select-options>
+        <stf-select-option >Тру ля ля</stf-select-option>
+        <div></div>
         <stf-select-option data-ng-repeat="address in $ctrl.addresses track by address.id" ng-value="address">
             {{address.description}}
         </stf-select-option>
@@ -40,6 +42,7 @@
     <stf-select-label>Адреса</stf-select-label>
     <stf-select-value>{{$ctrl.invoice.senderAddress.description}}</stf-select-value>
     <stf-select-options>
+        
         <stf-select-option data-ng-repeat="address in $ctrl.addresses track by address.id" ng-value="address">
             {{address.description}}
         </stf-select-option>
