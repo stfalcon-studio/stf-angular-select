@@ -108,7 +108,9 @@ export class StfSelectDirective {
                             break;
                         case 38: selectKeyUpPressed();
                             break;
-                        case 27: hideDropDown();
+                        case 27: 
+                            $searchInputContainer.focus();
+                            hideDropDown();
                             event.preventDefault();
                             event.stopPropagation();
                             break;
@@ -291,6 +293,9 @@ export class StfSelectDirective {
                         setTimeout(() => this.click(), 100);
                         break;
                     case 9:
+                        event.preventDefault();
+                        event.stopPropagation();
+                        element.find('.stf-select__search-input').focus();
                         hideDropDown();
                         break;
                     case 40: {
@@ -303,7 +308,9 @@ export class StfSelectDirective {
                         event.preventDefault();
                     }
                         break;
-                    case 27: hideDropDown();
+                    case 27: 
+                        element.find('.stf-select__search-input').focus();
+                        hideDropDown();
                         event.preventDefault();
                         event.stopPropagation();
                             break;
