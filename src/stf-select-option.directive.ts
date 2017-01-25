@@ -1,3 +1,4 @@
+import * as angular from 'angular';
 import IScope = angular.IScope;
 /**
  * Created by andrey on 06.09.16.

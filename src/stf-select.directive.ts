@@ -1,3 +1,4 @@
+import * as angular from 'angular';
 import { IOptionScope } from './stf-select-option.directive';
 import { Observable } from 'rxjs/Observable';
 
@@ -6,7 +7,6 @@ import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/fromEvent';
 import * as _ from "lodash";
-
 
 export interface IScopeStfSelect extends angular.IScope {
     label: string;

@@ -1,6 +1,7 @@
 /**
  * Created by andrey on 22.09.16.
  */
+import * as angular from 'angular';
 require('phantomjs-polyfill');
 require('es6-promise').polyfill();
 import "angular";
