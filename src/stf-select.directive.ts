@@ -151,6 +151,7 @@ export class StfSelectDirective {
             .subscribe((event: any) => {
                 elementChildren.removeClass('stf-select__tab-focus');
             });
+            
 
 
         const $searchInputKePressSubscription = Observable.fromEvent($searchInputContainer, 'click')
@@ -163,7 +164,6 @@ export class StfSelectDirective {
         const valueContainerObservable: Observable<any> = Observable.fromEvent(valueContainer, 'click').throttleTime(this._NP_STF_SELECT_THROTTLE_TIME);
         const valueContainerSubscription = valueContainerObservable.subscribe(event => {
             if (!scope.disabled && !scope.ngDisabled) {
-                valueClicked = true;
                 scope.focused = true;
                 scope.$apply();
             }
@@ -184,14 +184,11 @@ export class StfSelectDirective {
 
         const windowClickObservable: Observable<any> = Observable.fromEvent(this.$window, 'click').throttleTime(100);
 
-        const windowClickSubscription = windowClickObservable.subscribe(() => {
-
-            if (!valueClicked && scope.focused) {
+        const windowClickSubscription = windowClickObservable.subscribe((event) => {
+            if(!$(event.target).closest(`[data-stf-select-id=${scope.selectId}]`).length){
                 scope.focused = false;
                 scope.$applyAsync();
-            } else {
-                valueClicked = false;
-            }
+            } 
         });
 
         const windowResizeObservable: Observable<any> = Observable.fromEvent(this.$window, 'resize').throttleTime(100);

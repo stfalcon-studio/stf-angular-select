@@ -2,6 +2,7 @@ import { ExampleAppComponent } from './example-app.component';
 import "../stf-select.scss";
 import "./example.scss";
 import { StfSelectDirective, StfSelectOptionDirective } from "../index";
+import * as angular from "angular";
 
 angular.module("app", ["pascalprecht.translate",])
     .constant('NP_STF_SELECT_THROTTLE_TIME', 100) // throtle  time of reaction after clicking

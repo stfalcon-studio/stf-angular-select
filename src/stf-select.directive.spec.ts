@@ -9,6 +9,7 @@ import "angular-mocks";
 import {StfSelectDirective} from "./stf-select.directive";
 import {StfSelectOptionDirective} from "./stf-select-option.directive";
 import "angular-translate";
+import {} from 'jasmine';
 
 interface IItemStfSelect{
     name: string;
