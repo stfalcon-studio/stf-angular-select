@@ -312,6 +312,7 @@ stf-fixed-option {
           &:after {
             opacity: 1;
             color: $red-color;
+            border-color: $red-color transparent transparent transparent;
           }
         }
       }
@@ -333,6 +334,7 @@ stf-fixed-option {
           &:after {
             opacity: 1;
             color: $red-color;
+            border-color: $red-color transparent transparent transparent;
           }
         }
       }

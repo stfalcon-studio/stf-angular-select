@@ -1,6 +1,6 @@
 {
   "name": "stf-angular-select",
-  "version": "1.1.30",
+  "version": "1.1.31",
   "description": "Custom reusable select for angular with wide posibilities",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -30,7 +30,7 @@
   "dependencies": {
     "@types/angular": "^1.5.23",
     "@types/angular-translate": "^2.4.34",
-    "@types/lodash": "^4.14.48",
+    "@types/lodash": "^4.14.63",
     "@types/node": "^6.0.46",
     "angular": "^1.5.8",
     "angular-translate": "^2.12.1",
