@@ -288,7 +288,7 @@ stf-fixed-option {
     }
   }
 }
-np-stf-select[required] {
+.stf-select-root[required] {
   .stf-select {
     &__placeholder {
       &:after {
@@ -299,7 +299,7 @@ np-stf-select[required] {
   }
 }
 .ng-submitted {
-  np-stf-select {
+  .stf-select-root {
     &.ng-invalid {
       .stf-select {
         &__container {

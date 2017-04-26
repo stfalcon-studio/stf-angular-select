@@ -64,6 +64,7 @@ export class StfSelectDirective {
     link(scope: IScopeStfSelect, element, attributes: any, ngModelController: angular.INgModelController, transcludeFn: angular.ITranscludeFunction) {
         if (scope.fixNgModal)
             mdFixes();
+        element.addClass("stf-select-root");
         let openScrollTimerId;
         let jqSelectOptions = element.find('.stf-select__options');
         let placeHolder = element.find('.stf-select__placeholder');
