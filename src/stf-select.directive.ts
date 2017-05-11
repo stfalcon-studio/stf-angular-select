@@ -65,6 +65,7 @@ export class StfSelectDirective {
         if (scope.fixNgModal)
             mdFixes();
         element.addClass("stf-select-root");
+        let $mainContainer = $(window);
         let openScrollTimerId;
         let jqSelectOptions = element.find('.stf-select__options');
         let placeHolder = element.find('.stf-select__placeholder');
@@ -371,8 +372,9 @@ export class StfSelectDirective {
 
             jOptinsParent.width(elementChildren.width());
             jOptins.width(elementChildren.width());
+            console.log($mainContainer.scrollTop());
             if (
-                (jqSelectOptions.offset().top
+                (jqSelectOptions.offset().top - $mainContainer.scrollTop()
                     + jOptins.height() + 10
                 )
                 > (window.innerHeight
@@ -413,7 +415,7 @@ export class StfSelectDirective {
 
         function hideDropDown() {
             scope.focused = false;
-            //$searchInputContainer.focus();
+            jOptinsParent.width(0); 
             setTimeout(() => {
                 scope.focused || scope.$applyAsync();
             }, 0);
